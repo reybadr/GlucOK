@@ -36,8 +36,7 @@
         }
 
         .hero-bg {
-            /* A more clinical/abstract background could be used if desired */
-            background-image: url('https://placehold.co/1920x1080/EFF6FF/1E3A8A?text=Bienestar+y+Salud+Diabetes'); /* Light blue bg, dark blue text */
+            background-image: url('https://placehold.co/1920x1080/EFF6FF/1E3A8A?text=Bienestar+y+Salud+Diabetes'); 
             background-size: cover;
             background-position: center;
         }
@@ -47,8 +46,6 @@
         }
         .card {
             @apply bg-white rounded-lg shadow-lg overflow-hidden transition-all duration-300 hover:shadow-xl flex flex-col border-l-4 border-transparent;
-            /* Subtle hover border with medicinal accent */
-            /* hover:border-[var(--medicinal-secondary)]; */ 
         }
         .card:hover {
              transform: translateY(-4px);
@@ -74,7 +71,7 @@
             background-color: #1E40AF; /* blue-800 */
         }
 
-        .btn-secondary { /* Used for recipe tabs, etc. */
+        .btn-secondary { 
             background-color: var(--medicinal-secondary);
             @apply text-white;
         }
@@ -92,13 +89,13 @@
             color: var(--medicinal-accent);
             @apply font-bold scale-105;
         }
-        .main-nav-gradient { /* Renamed from luxury-gradient */
-            background: linear-gradient(to right, #1E3A8A, #2563EB); /* Darker blue to primary blue */
+        .main-nav-gradient { 
+            background: linear-gradient(to right, #1E3A8A, #2563EB); 
         }
-        .text-accent { /* Replaces text-lime-400 or text-amber-400 for titles */
+        .text-accent { 
             color: var(--medicinal-secondary);
         }
-        .bg-theme-light { /* Replaces luxury-bg-light */
+        .bg-theme-light { 
             background-color: var(--medicinal-bg-light);
         }
         .accordion-item {
@@ -106,10 +103,10 @@
         }
         .accordion-header {
             @apply flex justify-between items-center p-4 cursor-pointer transition-colors duration-200;
-            background-color: #E0F2FE; /* sky-100, softer */
+            background-color: #E0F2FE; 
         }
         .accordion-header:hover {
-            background-color: #BAE6FD; /* sky-200 */
+            background-color: #BAE6FD; 
         }
         .accordion-icon svg {
             @apply w-5 h-5 transition-transform duration-300;
@@ -118,6 +115,10 @@
         .accordion-content {
             @apply p-4 bg-white;
             border-left: 3px solid var(--medicinal-secondary);
+        }
+        /* Class for smaller images within accordion */
+        .accordion-image {
+            @apply rounded-lg shadow-sm my-3 w-full max-w-[120px] sm:max-w-[150px] h-auto mx-auto object-contain; /* Reduced size */
         }
         .highlight {
             background-color: var(--medicinal-highlight-bg); 
@@ -134,7 +135,7 @@
             border-color: var(--medicinal-secondary);
             ring-color: var(--medicinal-secondary);
         }
-        #search-button { /* Search button with medicinal secondary color */
+        #search-button { 
              @apply ml-2 px-3 py-2 text-sm rounded-md text-white;
              background-color: var(--medicinal-secondary);
         }
@@ -161,24 +162,22 @@
         }
         .tab-button {
             @apply px-4 py-2 rounded-md font-medium transition-all duration-300;
-            background-color: #E0E7FF; /* indigo-100 */
+            background-color: #E0E7FF; 
             color: var(--medicinal-primary);
         }
         .tab-button:hover {
-            background-color: #C7D2FE; /* indigo-200 */
+            background-color: #C7D2FE; 
         }
         .tab-button.active {
             background-color: var(--medicinal-primary);
             @apply text-white shadow-md scale-105;
         }
-        /* Smaller images in key ingredients grid */
-        .key-ingredient-img {
-            @apply mx-auto mb-2 h-16 w-16 object-contain rounded-full p-1; /* Reduced size and padding */
+        .key-ingredient-img { /* Images for key ingredients grid */
+            @apply mx-auto mb-1 h-12 w-12 object-contain rounded-full p-0.5; /* Reduced size */
             background-color: var(--medicinal-bg-light);
         }
-        /* Smaller images in remedies section */
-        .remedy-img {
-            @apply rounded-md shadow-sm mr-4 w-20 h-14 object-cover flex-shrink-0; /* Reduced size */
+        .remedy-img { /* Images in remedies section */
+            @apply rounded-md shadow-sm mr-3 w-16 h-12 object-cover flex-shrink-0; /* Reduced size */
         }
 
     </style>
@@ -246,7 +245,7 @@
                 <h2 class="section-title">Entendiendo la Diabetes y el Papel de la Nutrición</h2>
                 <div class="grid md:grid-cols-2 gap-12 items-center">
                     <div>
-                        <img src="https://placehold.co/600x400/60A5FA/FFFFFF?text=Ilustración+Médica+Diabetes" alt="[Ilustración comparativa de Diabetes Tipo 1 y Tipo 2]" class="rounded-xl shadow-xl mb-6" onerror="this.onerror=null;this.src='https://placehold.co/600x400/cccccc/969696?text=Imagen+no+disponible';">
+                        <img src="https://placehold.co/600x400/60A5FA/FFFFFF?text=Ilustración+Médica+Diabetes" alt="[Ilustración de Diabetes Tipo 1 y Tipo 2]" class="rounded-xl shadow-xl mb-6" onerror="this.onerror=null;this.src='https://placehold.co/600x400/cccccc/969696?text=Imagen+no+disponible';">
                         <p class="mb-4 text-lg leading-relaxed" style="color: var(--medicinal-text-dark);">La diabetes se clasifica principalmente en dos tipos:</p>
                         <ul class="list-disc list-inside space-y-3 mb-6 text-lg" style="color: var(--medicinal-text-dark);">
                             <li><strong>Diabetes Tipo 1:</strong> Enfermedad autoinmune donde el cuerpo destruye las células productoras de insulina. Requiere terapia con insulina.</li>
@@ -265,7 +264,7 @@
                                 </div>
                                 <div id="content-carbs" class="accordion-content hidden" role="region">
                                     <p style="color: var(--medicinal-text-dark);">Fundamental, ya que impactan directamente el azúcar en sangre. Optar por carbohidratos complejos (integrales, legumbres, frutas, verduras). Una receta baja en glucosa tiene ≤5g de azúcar por porción.</p>
-                                    <img src="https://placehold.co/300x200/A7F3D0/065F46?text=Vegetales+y+Granos" alt="[Plato con vegetales y granos integrales representando carbohidratos complejos]" class="rounded-md shadow-md my-3" onerror="this.onerror=null;this.src='https://placehold.co/300x200/cccccc/969696?text=Imagen+no+disponible';">
+                                    <img src="https://placehold.co/300x200/A7F3D0/065F46?text=Vegetales+y+Granos" alt="[Imagen de Plato con vegetales y granos integrales]" class="accordion-image" onerror="this.onerror=null;this.src='https://placehold.co/200x150/cccccc/969696?text=No+Disponible';">
                                 </div>
                             </div>
                             <div class="accordion-item">
@@ -277,7 +276,7 @@
                                 </div>
                                 <div id="content-macro" class="accordion-content hidden" role="region">
                                     <p style="color: var(--medicinal-text-dark);">Proteínas magras (pollo, pescado, legumbres) para saciedad y salud muscular. Grasas saludables (aceite de oliva, aguacate, nueces) para salud cardiovascular.</p>
-                                    <img src="https://placehold.co/300x200/BFDBFE/1E40AF?text=Proteínas+y+Grasas" alt="[Variedad de proteínas magras y grasas saludables]" class="rounded-md shadow-md my-3" onerror="this.onerror=null;this.src='https://placehold.co/300x200/cccccc/969696?text=Imagen+no+disponible';">
+                                    <img src="https://placehold.co/300x200/BFDBFE/1E40AF?text=Proteínas+y+Grasas" alt="[Imagen de Variedad de proteínas y grasas saludables]" class="accordion-image" onerror="this.onerror=null;this.src='https://placehold.co/200x150/cccccc/969696?text=No+Disponible';">
                                 </div>
                             </div>
                             <div class="accordion-item">
@@ -289,7 +288,7 @@
                                 </div>
                                 <div id="content-fiber" class="accordion-content hidden" role="region">
                                     <p style="color: var(--medicinal-text-dark);">Ralentiza la digestión de carbohidratos y absorción de azúcar. Presente en verduras, frutas, granos integrales, legumbres. Kiwi, fenogreco e ispágula son buenas fuentes.</p>
-                                    <img src="https://placehold.co/300x200/A7F3D0/065F46?text=Alimentos+con+Fibra" alt="[Frutas y verduras coloridas ricas en fibra]" class="rounded-md shadow-md my-3" onerror="this.onerror=null;this.src='https://placehold.co/300x200/cccccc/969696?text=Imagen+no+disponible';">
+                                    <img src="https://placehold.co/300x200/A7F3D0/065F46?text=Alimentos+con+Fibra" alt="[Imagen de Frutas y verduras ricas en fibra]" class="accordion-image" onerror="this.onerror=null;this.src='https://placehold.co/200x150/cccccc/969696?text=No+Disponible';">
                                 </div>
                             </div>
                             <div class="accordion-item">
@@ -301,7 +300,7 @@
                                 </div>
                                 <div id="content-portions" class="accordion-content hidden" role="region">
                                     <p style="color: var(--medicinal-text-dark);">Incluso alimentos saludables pueden elevar la glucosa en exceso. El método del plato es útil: ½ verduras sin almidón, ¼ proteína magra, ¼ carbohidratos complejos.</p>
-                                    <img src="https://placehold.co/300x200/BFDBFE/1E40AF?text=Método+del+Plato" alt="[Ilustración del método del plato para control de porciones]" class="rounded-md shadow-md my-3" onerror="this.onerror=null;this.src='https://placehold.co/300x200/cccccc/969696?text=Imagen+no+disponible';">
+                                    <img src="https://placehold.co/300x200/BFDBFE/1E40AF?text=Método+del+Plato" alt="[Ilustración del método del plato]" class="accordion-image" onerror="this.onerror=null;this.src='https://placehold.co/200x150/cccccc/969696?text=No+Disponible';">
                                 </div>
                             </div>
                             <div class="accordion-item">
@@ -762,7 +761,7 @@
                 let currentSectionId = '';
                 sections.forEach(section => {
                     const sectionTop = section.offsetTop;
-                    if (window.scrollY >= sectionTop - 100) { // 100px offset for better UX
+                    if (window.scrollY >= sectionTop - 100) { 
                         currentSectionId = section.getAttribute('id');
                     }
                 });
@@ -776,7 +775,7 @@
             }
             
             if (sections.length > 0 && navLinks.length > 0) {
-                changeNavActiveState(); // Initial check
+                changeNavActiveState(); 
                 window.addEventListener('scroll', changeNavActiveState);
             }
 
@@ -847,7 +846,6 @@
                     button.addEventListener('click', () => {
                         tabButtons.forEach(btn => {
                             btn.classList.remove('active');
-                            // Re-apply non-active style if needed, e.g. by removing specific active classes
                         });
                         tabContents.forEach(content => content.classList.add('hidden'));
 
@@ -858,7 +856,7 @@
                         }
                     });
                 });
-                if (tabButtons[0]) tabButtons[0].click(); // Activate first tab
+                if (tabButtons[0]) tabButtons[0].click(); 
             }
 
             // --- Funcionalidad de Modals para Recetas ---
@@ -942,8 +940,8 @@
                     const img = document.createElement('img');
                     img.src = `https://placehold.co/100x100/${ing.color}/FFFFFF?text=${ing.desc.replace(/\s/g,'+')}`;
                     img.alt = `[Icono de ${ing.name}]`;
-                    img.className = 'key-ingredient-img'; // Use new class for smaller images
-                    img.onerror = function() { this.onerror=null; this.src='https://placehold.co/80x80/cccccc/969696?text=NoDisp'; }; // Adjusted placeholder size
+                    img.className = 'key-ingredient-img'; 
+                    img.onerror = function() { this.onerror=null; this.src='https://placehold.co/80x80/cccccc/969696?text=NoDisp'; }; 
                     
                     const p = document.createElement('p');
                     p.className = 'font-semibold font-poppins';
@@ -1009,9 +1007,7 @@
                 while (node = walker.nextNode()) {
                     const nodeId = `${areaIndex}-${nodeIndex}`;
                     originalTextNodes.set(nodeId, node.nodeValue);
-                    // Ensure node is an element before setting dataset property
                     if (node.parentElement && typeof node.parentElement.dataset !== 'undefined') {
-                         // Store reference on parent if text node, or on element itself
                         let refElement = node.nodeType === Node.TEXT_NODE ? node.parentElement : node;
                         if (!refElement.dataset.originalNodeIds) refElement.dataset.originalNodeIds = '';
                         refElement.dataset.originalNodeIds += nodeId + ';';
@@ -1029,7 +1025,7 @@
                                 parent.insertBefore(span.firstChild, span);
                             }
                             parent.removeChild(span);
-                            parent.normalize(); // Merge adjacent text nodes
+                            parent.normalize(); 
                         }
                     });
                 });
