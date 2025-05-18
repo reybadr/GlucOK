@@ -5,81 +5,99 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Guía Completa sobre Diabetes: Recetas, Remedios y Consejos</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;600;700&family=Open+Sans:wght@400;600&family=Poppins:wght@500;600&display=swap" rel="stylesheet">
     <style>
         body {
             font-family: 'Open Sans', sans-serif;
             scroll-behavior: smooth;
+            overscroll-behavior-y: contain; /* Prevents overscroll on main body when modal is open */
         }
         h1, h2, h3, h4, h5, h6 {
             font-family: 'Montserrat', sans-serif;
         }
+        .font-poppins {
+            font-family: 'Poppins', sans-serif;
+        }
         .hero-bg {
-            background-image: url('https://placehold.co/1920x1080/00334E/FFFFFF?text=Buffet+de+Alimentos+Frescos+y+Saludables');
+            background-image: url('https://placehold.co/1920x1080/004D40/E0F2F1?text=Vida+Saludable+con+Diabetes'); /* Teal background, light text */
             background-size: cover;
             background-position: center;
         }
         .section-title {
-            @apply text-3xl font-bold mb-8 text-center text-teal-700;
+            @apply text-4xl font-bold mb-10 text-center text-teal-700; /* Increased size and margin */
         }
         .card {
-            @apply bg-white rounded-xl shadow-2xl overflow-hidden transition-transform duration-300 hover:scale-105 flex flex-col;
+            @apply bg-white rounded-xl shadow-xl overflow-hidden transition-all duration-300 hover:shadow-2xl hover:scale-[1.03] flex flex-col border-l-4 border-transparent hover:border-lime-500;
         }
         .card-content {
             @apply p-6 flex-grow flex flex-col;
         }
         .card-content p {
-            @apply flex-grow; /* Allows paragraph to take available space */
+            @apply flex-grow mb-4 text-gray-700;
         }
         .btn {
-            @apply px-6 py-3 rounded-lg font-semibold transition-colors duration-300;
+            @apply px-8 py-3 rounded-lg font-poppins font-semibold transition-all duration-300 ease-in-out shadow-md hover:shadow-lg transform hover:-translate-y-0.5; /* More padding, Poppins font */
         }
         .btn-primary {
-            @apply bg-amber-500 text-white hover:bg-amber-600;
+            @apply bg-amber-500 text-white hover:bg-amber-600 active:bg-amber-700; /* Brighter amber */
         }
         .btn-secondary {
-            @apply bg-teal-600 text-white hover:bg-teal-700;
+            @apply bg-teal-600 text-white hover:bg-teal-700 active:bg-teal-800;
+        }
+        .btn-fun { /* New fun button style */
+            @apply bg-lime-500 text-white hover:bg-lime-600 active:bg-lime-700;
         }
         .nav-link {
-            @apply px-3 py-2 text-white hover:text-amber-400 transition-colors duration-300 rounded-md;
+            @apply px-4 py-2 text-white hover:text-amber-400 transition-colors duration-300 rounded-md text-sm font-medium; /* Slightly smaller, medium weight */
         }
         .luxury-gradient {
-            background: linear-gradient(to right, #00465f, #006978);
+            background: linear-gradient(to right, #005A6E, #007991); /* Slightly adjusted teal gradient */
         }
         .luxury-accent-bg {
-            background-color: #f7b733;
+            background-color: #FBBF24; /* Brighter Amber */
+        }
+        .fun-accent-bg {
+            background-color: #84CC16; /* Lime Green */
         }
         .luxury-text {
-            color: #1a3b58;
+            color: #1A202C; /* Darker, more neutral text for better contrast */
         }
         .luxury-bg-light {
-            background-color: #f8f9fa;
+            background-color: #F7FAFC; /* Lighter grey */
         }
         .accordion-item {
-            @apply border-b border-gray-300;
+            @apply border-b border-gray-200;
         }
         .accordion-header {
             @apply flex justify-between items-center p-5 cursor-pointer bg-teal-50 hover:bg-teal-100 transition-colors duration-200 rounded-t-lg;
+        }
+        .accordion-icon svg {
+            @apply w-5 h-5 text-teal-600 transition-transform duration-300;
         }
         .accordion-content {
             @apply p-5 bg-white border-l-4 border-amber-500;
         }
         .highlight {
-            background-color: yellow;
+            background-color: #FDE047; /* Softer yellow for highlight */
+            color: #713F12; /* Darker text on highlight */
             font-weight: bold;
+            padding: 0.1em 0.2em;
+            border-radius: 0.2em;
         }
         #search-input {
-            @apply p-2 rounded-md border border-gray-300 text-sm text-gray-700 focus:ring-amber-500 focus:border-amber-500;
+            @apply p-2 rounded-md border-2 border-gray-300 text-sm text-gray-700 focus:ring-2 focus:ring-lime-500 focus:border-lime-500 transition-all;
         }
-        #search-button, #clear-search-button {
-             @apply ml-2 px-3 py-2 text-sm rounded-md text-white;
+        #search-button {
+             @apply ml-2 px-4 py-2 text-sm rounded-md text-white bg-lime-500 hover:bg-lime-600;
         }
-        /* Modal Styles */
+        #clear-search-button {
+             @apply ml-2 px-4 py-2 text-sm rounded-md text-white bg-gray-400 hover:bg-gray-500;
+        }
         .modal {
-            @apply fixed inset-0 bg-black bg-opacity-75 hidden items-center justify-center z-[100] p-4 transition-opacity duration-300;
+            @apply fixed inset-0 bg-black bg-opacity-70 backdrop-blur-sm hidden items-center justify-center z-[100] p-4 transition-opacity duration-300;
         }
         .modal-content {
-            @apply bg-white p-6 rounded-lg shadow-xl max-w-2xl w-full max-h-[90vh] overflow-y-auto relative transform transition-all duration-300 scale-95 opacity-0;
+            @apply bg-white p-6 sm:p-8 rounded-xl shadow-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto relative transform transition-all duration-300 scale-95 opacity-0;
         }
         .modal.active {
             @apply flex;
@@ -87,8 +105,14 @@
         .modal.active .modal-content {
             @apply scale-100 opacity-100;
         }
-        .modal-close-btn {
-            @apply absolute top-4 right-4 text-gray-600 hover:text-red-500 text-3xl font-bold cursor-pointer;
+        .modal-close-btn svg {
+            @apply w-7 h-7 text-gray-500 hover:text-red-600 transition-colors;
+        }
+        .tab-button.active {
+            @apply bg-lime-500 text-white shadow-lg scale-105;
+        }
+        .tab-button {
+            @apply px-5 py-2 rounded-md font-medium transition-all duration-300 hover:bg-lime-400 hover:text-white;
         }
     </style>
 </head>
@@ -96,15 +120,28 @@
 
     <nav class="luxury-gradient p-4 sticky top-0 z-50 shadow-lg">
         <div class="container mx-auto flex flex-wrap justify-between items-center">
-            <a href="#home" class="text-2xl font-bold text-white">DiabetesInfo</a>
+            <a href="#home" class="text-2xl font-bold text-white font-poppins flex items-center">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-8 w-8 mr-2 text-lime-400" viewBox="0 0 20 20" fill="currentColor">
+                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd" />
+                </svg>
+                DiabetesInfo
+            </a>
             
             <div class="flex items-center order-last md:order-none mt-4 md:mt-0 md:ml-auto md:mr-4">
                 <input type="text" id="search-input" placeholder="Buscar palabra clave..." class="w-full md:w-auto">
-                <button id="search-button" class="btn-primary text-xs">Buscar</button>
-                <button id="clear-search-button" class="bg-gray-500 hover:bg-gray-600 text-xs">Limpiar</button>
+                <button id="search-button" title="Buscar">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                      <path fill-rule="evenodd" d="M8 4a4 4 0 100 8 4 4 0 000-8zM2 8a6 6 0 1110.89 3.476l4.817 4.817a1 1 0 01-1.414 1.414l-4.816-4.816A6 6 0 012 8z" clip-rule="evenodd" />
+                    </svg>
+                </button>
+                <button id="clear-search-button" title="Limpiar Búsqueda">
+                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor">
+                        <path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" />
+                    </svg>
+                </button>
             </div>
 
-            <button id="nav-toggle" class="text-white focus:outline-none md:hidden">
+            <button id="nav-toggle" class="text-white focus:outline-none md:hidden p-2 rounded-md hover:bg-teal-700">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path></svg>
             </button>
             <div id="nav-content" class="hidden w-full md:flex md:w-auto md:items-center">
@@ -121,77 +158,92 @@
         </div>
     </nav>
 
-    <div id="search-results-summary" class="container mx-auto px-6 py-2 text-center text-teal-700 font-semibold"></div>
+    <div id="search-results-summary" class="container mx-auto px-6 py-3 text-center text-teal-700 font-semibold text-lg"></div>
 
     <section id="home" class="hero-bg text-white min-h-screen flex items-center justify-center searchable-content">
-        <div class="bg-black bg-opacity-60 p-10 rounded-lg text-center max-w-3xl mx-auto">
-            <h1 class="text-5xl font-bold mb-6">Controla tu Diabetes, Disfruta tu Vida</h1>
-            <p class="text-xl mb-8">Descubre recetas deliciosas, remedios efectivos y consejos prácticos para manejar la diabetes y mejorar tu calidad de vida. Una alimentación adecuada es clave.</p>
-            <a href="#about-diabetes" class="btn btn-primary text-lg">Aprende Más</a>
+        <div class="bg-black bg-opacity-60 p-10 rounded-xl text-center max-w-3xl mx-auto shadow-2xl">
+            <h1 class="text-5xl md:text-6xl font-bold mb-6 font-poppins">Controla tu Diabetes, <span class="text-lime-400">Disfruta tu Vida</span></h1>
+            <p class="text-xl mb-8 text-gray-200">Descubre recetas deliciosas, remedios efectivos y consejos prácticos para manejar la diabetes y mejorar tu calidad de vida. Una alimentación adecuada es clave.</p>
+            <a href="#about-diabetes" class="btn btn-fun text-lg">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline-block mr-2" viewBox="0 0 20 20" fill="currentColor">
+                  <path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-8.707l-3-3a1 1 0 00-1.414 0l-3 3a1 1 0 001.414 1.414L9 9.414V13a1 1 0 102 0V9.414l1.293 1.293a1 1 0 001.414-1.414z" clip-rule="evenodd" />
+                </svg>
+                Aprende Más
+            </a>
         </div>
     </section>
 
-    <section id="about-diabetes" class="py-16 luxury-bg-light searchable-content">
+    <section id="about-diabetes" class="py-20 luxury-bg-light searchable-content">
         <div class="container mx-auto px-6">
             <h2 class="section-title luxury-text">Entendiendo la Diabetes y el Papel de la Nutrición</h2>
-            <div class="grid md:grid-cols-2 gap-10 items-center">
+            <div class="grid md:grid-cols-2 gap-12 items-center">
                 <div>
-                    <img src="https://placehold.co/600x400/2D8A9D/FFFFFF?text=Ilustración+Comparativa+Diabetes+Tipo+1+y+2" alt="[Ilustración comparativa de Diabetes Tipo 1 y Tipo 2]" class="rounded-lg shadow-xl mb-6" onerror="this.onerror=null;this.src='https://placehold.co/600x400/cccccc/969696?text=Imagen+no+disponible';">
+                    <img src="https://placehold.co/600x400/16A085/FFFFFF?text=Ilustración+Educativa+Diabetes" alt="[Ilustración comparativa de Diabetes Tipo 1 y Tipo 2]" class="rounded-xl shadow-xl mb-6" onerror="this.onerror=null;this.src='https://placehold.co/600x400/cccccc/969696?text=Imagen+no+disponible';">
                     <p class="mb-4 text-lg leading-relaxed luxury-text">La diabetes se clasifica principalmente en dos tipos:</p>
-                    <ul class="list-disc list-inside space-y-2 mb-6 text-lg luxury-text">
+                    <ul class="list-disc list-inside space-y-3 mb-6 text-lg luxury-text">
                         <li><strong>Diabetes Tipo 1:</strong> Enfermedad autoinmune donde el cuerpo destruye las células productoras de insulina. Requiere terapia con insulina.</li>
                         <li><strong>Diabetes Tipo 2:</strong> La forma más común, caracterizada por resistencia a la insulina y/o deficiencia en su producción. El estilo de vida es clave en su tratamiento.</li>
                     </ul>
                 </div>
                 <div>
-                    <h3 class="text-2xl font-semibold mb-6 text-teal-600">Principios Dietéticos Clave</h3>
-                    <div id="accordion-diet-principles" class="space-y-1">
+                    <h3 class="text-3xl font-semibold mb-8 text-teal-600">Principios Dietéticos Clave</h3>
+                    <div id="accordion-diet-principles" class="space-y-2 shadow-lg rounded-xl overflow-hidden">
                         <div class="accordion-item">
-                            <div class="accordion-header">
-                                <span class="font-semibold text-teal-700">1. Control de Carbohidratos</span>
-                                <span class="accordion-icon text-teal-700 transform transition-transform duration-300">+</span>
+                            <div class="accordion-header" role="button" tabindex="0" aria-expanded="false" aria-controls="content-carbs">
+                                <span class="font-semibold text-teal-700 text-lg">1. Control de Carbohidratos</span>
+                                <span class="accordion-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" /></svg>
+                                </span>
                             </div>
-                            <div class="accordion-content hidden">
+                            <div id="content-carbs" class="accordion-content hidden" role="region">
                                 <p class="luxury-text">Fundamental, ya que impactan directamente el azúcar en sangre. Optar por carbohidratos complejos (integrales, legumbres, frutas, verduras). Una receta baja en glucosa tiene ≤5g de azúcar por porción.</p>
-                                <img src="https://placehold.co/300x200/88D498/FFFFFF?text=Plato+con+Vegetales+y+Granos+Integrales" alt="[Plato con vegetales y granos integrales representando carbohidratos complejos]" class="rounded-md shadow-md my-3" onerror="this.onerror=null;this.src='https://placehold.co/300x200/cccccc/969696?text=Imagen+no+disponible';">
+                                <img src="https://placehold.co/300x200/84CC16/FFFFFF?text=Plato+con+Vegetales+y+Granos+Integrales" alt="[Plato con vegetales y granos integrales representando carbohidratos complejos]" class="rounded-md shadow-md my-3" onerror="this.onerror=null;this.src='https://placehold.co/300x200/cccccc/969696?text=Imagen+no+disponible';">
                             </div>
                         </div>
                         <div class="accordion-item">
-                            <div class="accordion-header">
-                                <span class="font-semibold text-teal-700">2. Equilibrio de Macronutrientes</span>
-                                <span class="accordion-icon text-teal-700 transform transition-transform duration-300">+</span>
+                            <div class="accordion-header" role="button" tabindex="0" aria-expanded="false" aria-controls="content-macro">
+                                <span class="font-semibold text-teal-700 text-lg">2. Equilibrio de Macronutrientes</span>
+                                <span class="accordion-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" /></svg>
+                                </span>
                             </div>
-                            <div class="accordion-content hidden">
+                            <div id="content-macro" class="accordion-content hidden" role="region">
                                 <p class="luxury-text">Proteínas magras (pollo, pescado, legumbres) para saciedad y salud muscular. Grasas saludables (aceite de oliva, aguacate, nueces) para salud cardiovascular.</p>
-                                <img src="https://placehold.co/300x200/F1C40F/333333?text=Variedad+de+Proteínas+y+Grasas+Saludables" alt="[Variedad de proteínas magras y grasas saludables]" class="rounded-md shadow-md my-3" onerror="this.onerror=null;this.src='https://placehold.co/300x200/cccccc/969696?text=Imagen+no+disponible';">
+                                <img src="https://placehold.co/300x200/FBBF24/333333?text=Variedad+de+Proteínas+y+Grasas+Saludables" alt="[Variedad de proteínas magras y grasas saludables]" class="rounded-md shadow-md my-3" onerror="this.onerror=null;this.src='https://placehold.co/300x200/cccccc/969696?text=Imagen+no+disponible';">
                             </div>
                         </div>
                         <div class="accordion-item">
-                            <div class="accordion-header">
-                                <span class="font-semibold text-teal-700">3. El Poder de la Fibra</span>
-                                <span class="accordion-icon text-teal-700 transform transition-transform duration-300">+</span>
+                            <div class="accordion-header" role="button" tabindex="0" aria-expanded="false" aria-controls="content-fiber">
+                                <span class="font-semibold text-teal-700 text-lg">3. El Poder de la Fibra</span>
+                                <span class="accordion-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" /></svg>
+                                </span>
                             </div>
-                            <div class="accordion-content hidden">
+                            <div id="content-fiber" class="accordion-content hidden" role="region">
                                 <p class="luxury-text">Ralentiza la digestión de carbohidratos y absorción de azúcar. Presente en verduras, frutas, granos integrales, legumbres. Kiwi, fenogreco e ispágula son buenas fuentes.</p>
                                 <img src="https://placehold.co/300x200/F3A505/FFFFFF?text=Frutas+y+Verduras+Ricas+en+Fibra" alt="[Frutas y verduras coloridas ricas en fibra]" class="rounded-md shadow-md my-3" onerror="this.onerror=null;this.src='https://placehold.co/300x200/cccccc/969696?text=Imagen+no+disponible';">
                             </div>
                         </div>
                         <div class="accordion-item">
-                            <div class="accordion-header">
-                                <span class="font-semibold text-teal-700">4. Control de Porciones</span>
-                                <span class="accordion-icon text-teal-700 transform transition-transform duration-300">+</span>
+                            <div class="accordion-header" role="button" tabindex="0" aria-expanded="false" aria-controls="content-portions">
+                                <span class="font-semibold text-teal-700 text-lg">4. Control de Porciones</span>
+                                <span class="accordion-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" /></svg>
+                                </span>
                             </div>
-                            <div class="accordion-content hidden">
+                            <div id="content-portions" class="accordion-content hidden" role="region">
                                 <p class="luxury-text">Incluso alimentos saludables pueden elevar la glucosa en exceso. El método del plato es útil: ½ verduras sin almidón, ¼ proteína magra, ¼ carbohidratos complejos.</p>
                                 <img src="https://placehold.co/300x200/C6D8D3/333333?text=Ilustración+del+Método+del+Plato" alt="[Ilustración del método del plato para control de porciones]" class="rounded-md shadow-md my-3" onerror="this.onerror=null;this.src='https://placehold.co/300x200/cccccc/969696?text=Imagen+no+disponible';">
                             </div>
                         </div>
                         <div class="accordion-item">
-                            <div class="accordion-header">
-                                <span class="font-semibold text-teal-700">5. Índice Glucémico (IG) y Carga Glucémica (CG)</span>
-                                <span class="accordion-icon text-teal-700 transform transition-transform duration-300">+</span>
+                            <div class="accordion-header" role="button" tabindex="0" aria-expanded="false" aria-controls="content-gi">
+                                <span class="font-semibold text-teal-700 text-lg">5. Índice Glucémico (IG) y Carga Glucémica (CG)</span>
+                                <span class="accordion-icon">
+                                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2.5" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M19.5 8.25l-7.5 7.5-7.5-7.5" /></svg>
+                                </span>
                             </div>
-                            <div class="accordion-content hidden">
+                            <div id="content-gi" class="accordion-content hidden" role="region">
                                 <p class="luxury-text">El IG mide la rapidez con que un alimento eleva la glucosa. La CG considera calidad y cantidad de carbohidratos. Optar por alimentos de bajo IG y CG.</p>
                             </div>
                         </div>
@@ -201,191 +253,207 @@
         </div>
     </section>
 
-    <section id="recipes" class="py-16 searchable-content">
+    <section id="recipes" class="py-20 searchable-content">
         <div class="container mx-auto px-6">
-            <h2 class="section-title luxury-text">Recetas Deliciosas y Aptas para Diabéticos</h2>
-            <p class="text-center mb-12 text-lg luxury-text">Comer bien con diabetes no significa renunciar al sabor. Explora estas recetas de España y de todo el mundo.</p>
+            <h2 class="section-title luxury-text">Recetas Deliciosas y <span class="text-lime-600">Aptas para Diabéticos</span></h2>
+            <p class="text-center mb-12 text-lg luxury-text max-w-2xl mx-auto">Comer bien con diabetes no significa renunciar al sabor. Explora estas recetas de España y de todo el mundo, ¡llenas de color y nutrición!</p>
 
-            <div class="mb-8 flex justify-center space-x-4">
-                <button class="tab-button btn btn-secondary active" data-tab="national-recipes">Recetas Nacionales (España)</button>
-                <button class="tab-button btn btn-secondary" data-tab="international-recipes">Recetas Internacionales</button>
+            <div class="mb-10 flex justify-center space-x-2 sm:space-x-4 bg-teal-50 p-2 rounded-xl shadow-md max-w-md mx-auto">
+                <button class="tab-button btn-secondary active" data-tab="national-recipes">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline-block mr-1" viewBox="0 0 20 20" fill="currentColor"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" /></svg>
+                    Nacionales
+                </button>
+                <button class="tab-button btn-secondary" data-tab="international-recipes">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline-block mr-1" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM4.332 8.027a6.002 6.002 0 0111.336 0l2.013 5.435A1 1 0 0116.973 15H3.027a1 1 0 01-.708-1.538l2.013-5.435z" clip-rule="evenodd" /></svg>
+                    Internacionales
+                </button>
             </div>
 
             <div id="national-recipes" class="tab-content grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                 <div class="card">
-                    <img src="https://placehold.co/600x400/A8DADC/333333?text=Rollitos+de+Bresaola+con+Rúcula+y+Kiwi+Verde" alt="[Rollitos de Bresaola con Rúcula y Kiwi Verde]" class="w-full h-56 object-cover" onerror="this.onerror=null;this.src='https://placehold.co/600x400/cccccc/969696?text=Imagen+no+disponible';">
+                    <img src="https://placehold.co/600x400/A8DADC/1A202C?text=Rollitos+Bresaola+Kiwi" alt="[Rollitos de Bresaola con Rúcula y Kiwi Verde]" class="w-full h-56 object-cover" onerror="this.onerror=null;this.src='https://placehold.co/600x400/cccccc/969696?text=Imagen+no+disponible';">
                     <div class="card-content">
-                        <h4 class="text-xl font-semibold mb-2 text-teal-700">Rollitos de Bresaola y Kiwi</h4>
-                        <p class="text-sm text-gray-600 mb-3">Snack rápido y delicioso (Zespri). Solo 4g de azúcar. Ingredientes: bresaola, rúcula, kiwi verde.</p>
-                        <a href="javascript:void(0)" class="text-amber-600 hover:underline mt-auto openModalBtn" data-modal-target="bresaolaKiwiModal">Ver receta</a>
+                        <h4 class="text-xl font-semibold mb-2 text-teal-700 font-poppins">Rollitos de Bresaola y Kiwi</h4>
+                        <p>Snack rápido y delicioso (Zespri). Solo 4g de azúcar. Ingredientes: bresaola, rúcula, kiwi verde.</p>
+                        <a href="javascript:void(0)" class="btn btn-fun text-sm mt-auto self-start openModalBtn" data-modal-target="bresaolaKiwiModal">Ver receta</a>
                     </div>
                 </div>
                 <div class="card">
-                    <img src="https://placehold.co/600x400/F1FAEE/333333?text=Sándwich+con+Queso+Ligero+Calabaza+y+Kiwi+Amarillo" alt="[Sándwich con Queso Ligero, Calabaza y Kiwi Amarillo]" class="w-full h-56 object-cover" onerror="this.onerror=null;this.src='https://placehold.co/600x400/cccccc/969696?text=Imagen+no+disponible';">
+                    <img src="https://placehold.co/600x400/F1FAEE/1A202C?text=Sándwich+Queso+Kiwi" alt="[Sándwich con Queso Ligero, Calabaza y Kiwi Amarillo]" class="w-full h-56 object-cover" onerror="this.onerror=null;this.src='https://placehold.co/600x400/cccccc/969696?text=Imagen+no+disponible';">
                     <div class="card-content">
-                        <h4 class="text-xl font-semibold mb-2 text-teal-700">Sándwich de Queso Ligero y Kiwi</h4>
-                        <p class="text-sm text-gray-600 mb-3">Combinación interesante (Zespri). 5.62g de azúcar. Ingredientes: queso ligero, calabaza, kiwi amarillo.</p>
-                        <a href="javascript:void(0)" class="text-amber-600 hover:underline mt-auto openModalBtn" data-modal-target="sandwichQuesoKiwiModal">Ver receta</a>
+                        <h4 class="text-xl font-semibold mb-2 text-teal-700 font-poppins">Sándwich de Queso Ligero y Kiwi</h4>
+                        <p>Combinación interesante (Zespri). 5.62g de azúcar. Ingredientes: queso ligero, calabaza, kiwi amarillo.</p>
+                        <a href="javascript:void(0)" class="btn btn-fun text-sm mt-auto self-start openModalBtn" data-modal-target="sandwichQuesoKiwiModal">Ver receta</a>
                     </div>
                 </div>
                 <div class="card">
-                    <img src="https://placehold.co/600x400/457B9D/FFFFFF?text=Batido+Rojo+con+Fresas+Manzana+y+Avena" alt="[Batido rojo con fresas, manzana y avena]" class="w-full h-56 object-cover" onerror="this.onerror=null;this.src='https://placehold.co/600x400/cccccc/969696?text=Imagen+no+disponible';">
+                    <img src="https://placehold.co/600x400/457B9D/FFFFFF?text=Batido+Fresa+Manzana" alt="[Batido rojo con fresas, manzana y avena]" class="w-full h-56 object-cover" onerror="this.onerror=null;this.src='https://placehold.co/600x400/cccccc/969696?text=Imagen+no+disponible';">
                     <div class="card-content">
-                        <h4 class="text-xl font-semibold mb-2 text-teal-700">Batido de Fresa, Manzana y Avena</h4>
-                        <p class="text-sm text-gray-600 mb-3">Opción saludable para desayuno o merienda (Okdiario). Ingredientes: fresas, manzana, canela, avena, leche de almendras.</p>
-                        <a href="javascript:void(0)" class="text-amber-600 hover:underline mt-auto openModalBtn" data-modal-target="batidoFresaManzanaModal">Ver receta</a>
+                        <h4 class="text-xl font-semibold mb-2 text-teal-700 font-poppins">Batido de Fresa, Manzana y Avena</h4>
+                        <p>Opción saludable para desayuno o merienda (Okdiario). Ingredientes: fresas, manzana, canela, avena, leche de almendras.</p>
+                        <a href="javascript:void(0)" class="btn btn-fun text-sm mt-auto self-start openModalBtn" data-modal-target="batidoFresaManzanaModal">Ver receta</a>
                     </div>
                 </div>
-                <div class="card">
-                    <img src="https://placehold.co/600x400/1D3557/FFFFFF?text=Tortilla+Verde+con+Avena+y+Espinacas" alt="[Tortilla verde con avena y espinacas]" class="w-full h-56 object-cover" onerror="this.onerror=null;this.src='https://placehold.co/600x400/cccccc/969696?text=Imagen+no+disponible';">
+                 <div class="card">
+                    <img src="https://placehold.co/600x400/1D3557/FFFFFF?text=Tortilla+Avena+Espinacas" alt="[Tortilla verde con avena y espinacas]" class="w-full h-56 object-cover" onerror="this.onerror=null;this.src='https://placehold.co/600x400/cccccc/969696?text=Imagen+no+disponible';">
                     <div class="card-content">
-                        <h4 class="text-xl font-semibold mb-2 text-teal-700">Tortilla de Avena y Espinacas</h4>
-                        <p class="text-sm text-gray-600 mb-3">Alternativa a la tortilla tradicional (Okdiario). Ingredientes: huevos, harina de avena, espinacas.</p>
-                        <a href="javascript:void(0)" class="text-amber-600 hover:underline mt-auto openModalBtn" data-modal-target="tortillaAvenaEspinacasModal">Ver receta</a>
+                        <h4 class="text-xl font-semibold mb-2 text-teal-700 font-poppins">Tortilla de Avena y Espinacas</h4>
+                        <p>Alternativa a la tortilla tradicional (Okdiario). Ingredientes: huevos, harina de avena, espinacas.</p>
+                        <a href="javascript:void(0)" class="btn btn-fun text-sm mt-auto self-start openModalBtn" data-modal-target="tortillaAvenaEspinacasModal">Ver receta</a>
                     </div>
                 </div>
             </div>
 
             <div id="international-recipes" class="tab-content hidden grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                 <div class="card">
-                    <img src="https://placehold.co/600x400/E63946/FFFFFF?text=Bruschetta+Italiana+con+Tomate+Fresco+y+Albahaca" alt="[Bruschetta italiana con tomate fresco y albahaca]" class="w-full h-56 object-cover" onerror="this.onerror=null;this.src='https://placehold.co/600x400/cccccc/969696?text=Imagen+no+disponible';">
+                    <img src="https://placehold.co/600x400/E63946/FFFFFF?text=Bruschetta+Tomate+Albahaca" alt="[Bruschetta italiana con tomate fresco y albahaca]" class="w-full h-56 object-cover" onerror="this.onerror=null;this.src='https://placehold.co/600x400/cccccc/969696?text=Imagen+no+disponible';">
                     <div class="card-content">
-                        <h4 class="text-xl font-semibold mb-2 text-teal-700">Bruschetta de Tomate y Albahaca</h4>
-                        <p class="text-sm text-gray-600 mb-3">Aperitivo italiano clásico (Clínica Mayo). Ingredientes: tomate, albahaca, pan integral.</p>
-                        <a href="javascript:void(0)" class="text-amber-600 hover:underline mt-auto openModalBtn" data-modal-target="bruschettaTomateModal">Ver receta</a>
+                        <h4 class="text-xl font-semibold mb-2 text-teal-700 font-poppins">Bruschetta de Tomate y Albahaca</h4>
+                        <p>Aperitivo italiano clásico (Clínica Mayo). Ingredientes: tomate, albahaca, pan integral.</p>
+                        <a href="javascript:void(0)" class="btn btn-fun text-sm mt-auto self-start openModalBtn" data-modal-target="bruschettaTomateModal">Ver receta</a>
                     </div>
                 </div>
                 <div class="card">
-                    <img src="https://placehold.co/600x400/A8DADC/333333?text=Pechuga+de+Pollo+Cordon+Bleu+Horneada" alt="[Pechuga de pollo Cordon Bleu horneada]" class="w-full h-56 object-cover" onerror="this.onerror=null;this.src='https://placehold.co/600x400/cccccc/969696?text=Imagen+no+disponible';">
+                    <img src="https://placehold.co/600x400/2A9D8F/FFFFFF?text=Pollo+Cordon+Bleu+Saludable" alt="[Pechuga de pollo Cordon Bleu horneada]" class="w-full h-56 object-cover" onerror="this.onerror=null;this.src='https://placehold.co/600x400/cccccc/969696?text=Imagen+no+disponible';">
                     <div class="card-content">
-                        <h4 class="text-xl font-semibold mb-2 text-teal-700">Pollo Cordon Bleu (Versión Saludable)</h4>
-                        <p class="text-sm text-gray-600 mb-3">Plato principal de inspiración francesa (Clínica Mayo).</p>
-                        <a href="javascript:void(0)" class="text-amber-600 hover:underline mt-auto openModalBtn" data-modal-target="polloCordonBleuModal">Ver receta</a>
+                        <h4 class="text-xl font-semibold mb-2 text-teal-700 font-poppins">Pollo Cordon Bleu (Versión Saludable)</h4>
+                        <p>Plato principal de inspiración francesa (Clínica Mayo).</p>
+                        <a href="javascript:void(0)" class="btn btn-fun text-sm mt-auto self-start openModalBtn" data-modal-target="polloCordonBleuModal">Ver receta</a>
                     </div>
                 </div>
                 <div class="card">
-                    <img src="https://placehold.co/600x400/F1FAEE/333333?text=Panqueques+Amarillos+Besan+Chilla+con+Hierbas" alt="[Panqueques amarillos Besan Chilla con hierbas]" class="w-full h-56 object-cover" onerror="this.onerror=null;this.src='https://placehold.co/600x400/cccccc/969696?text=Imagen+no+disponible';">
+                    <img src="https://placehold.co/600x400/E9C46A/1A202C?text=Besan+Chilla+Pakistaní" alt="[Panqueques amarillos Besan Chilla con hierbas]" class="w-full h-56 object-cover" onerror="this.onerror=null;this.src='https://placehold.co/600x400/cccccc/969696?text=Imagen+no+disponible';">
                     <div class="card-content">
-                        <h4 class="text-xl font-semibold mb-2 text-teal-700">Besan Chilla Pakistaní</h4>
-                        <p class="text-sm text-gray-600 mb-3">Panqueques salados de garbanzos (Diabetes Food Hub).</p>
-                        <a href="javascript:void(0)" class="text-amber-600 hover:underline mt-auto openModalBtn" data-modal-target="besanChillaModal">Ver receta</a>
+                        <h4 class="text-xl font-semibold mb-2 text-teal-700 font-poppins">Besan Chilla Pakistaní</h4>
+                        <p>Panqueques salados de garbanzos (Diabetes Food Hub).</p>
+                        <a href="javascript:void(0)" class="btn btn-fun text-sm mt-auto self-start openModalBtn" data-modal-target="besanChillaModal">Ver receta</a>
                     </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <div id="bresaolaKiwiModal" class="modal">
+    <div id="bresaolaKiwiModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="bresaolaKiwiModalTitle">
         <div class="modal-content">
-            <span class="modal-close-btn closeModalBtn" data-modal-id="bresaolaKiwiModal">&times;</span>
-            <h3 class="text-2xl font-semibold text-teal-700 mb-4">Rollitos de Bresaola y Kiwi</h3>
-            <img src="https://placehold.co/600x400/A8DADC/333333?text=Rollitos+de+Bresaola+con+Rúcula+y+Kiwi+Verde" alt="[Rollitos de Bresaola con Rúcula y Kiwi Verde]" class="w-full h-64 object-cover rounded-md mb-4" onerror="this.onerror=null;this.src='https://placehold.co/600x400/cccccc/969696?text=Imagen+no+disponible';">
-            <h4 class="text-xl font-semibold text-teal-600 mt-4 mb-2">Ingredientes:</h4>
-            <ul class="list-disc list-inside mb-4 luxury-text">
+            <button class="modal-close-btn closeModalBtn" data-modal-id="bresaolaKiwiModal" aria-label="Cerrar modal">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
+            </button>
+            <h3 id="bresaolaKiwiModalTitle" class="text-2xl font-semibold text-teal-700 mb-4 font-poppins">Rollitos de Bresaola y Kiwi</h3>
+            <img src="https://placehold.co/600x400/A8DADC/1A202C?text=Rollitos+Bresaola+Kiwi" alt="[Rollitos de Bresaola con Rúcula y Kiwi Verde]" class="w-full h-64 object-cover rounded-lg mb-4 shadow-md" onerror="this.onerror=null;this.src='https://placehold.co/600x400/cccccc/969696?text=Imagen+no+disponible';">
+            <h4 class="text-xl font-semibold text-teal-600 mt-4 mb-2 font-poppins">Ingredientes:</h4>
+            <ul class="list-disc list-inside mb-4 luxury-text space-y-1">
                 <li>Bresaola en lonchas finas</li>
                 <li>Rúcula fresca</li>
                 <li>Kiwi Zespri™ Green (pelado y cortado en bastones o rodajas finas)</li>
                 <li>Opcional: unas gotas de aceite de oliva virgen extra, pimienta negra molida</li>
             </ul>
-            <h4 class="text-xl font-semibold text-teal-600 mb-2">Modo de Empleo y Procedimiento:</h4>
-            <div class="luxury-text space-y-2 text-sm">
+            <h4 class="text-xl font-semibold text-teal-600 mb-2 font-poppins">Modo de Empleo y Procedimiento:</h4>
+            <div class="luxury-text space-y-2 text-sm leading-relaxed">
                 <p>1. Extender una loncha de bresaola.</p>
                 <p>2. Colocar un pequeño manojo de rúcula en un extremo.</p>
                 <p>3. Añadir 1-2 bastones de kiwi Zespri™ Green junto a la rúcula.</p>
                 <p>4. Enrollar la bresaola firmemente.</p>
                 <p>5. Si se desea, rociar con unas gotas de aceite de oliva y un poco de pimienta.</p>
-                <p>6. Servir inmediatamente.</p>
-                <p class="mt-2 text-xs italic">Fuente: Basado en Zespri, procedimiento generalizado.</p>
+                <p>6. Servir inmediatamente. ¡Un snack fresco y ligero!</p>
+                <p class="mt-3 text-xs italic text-gray-500">Fuente: Basado en Zespri, procedimiento generalizado.</p>
             </div>
         </div>
     </div>
 
-    <div id="sandwichQuesoKiwiModal" class="modal">
+    <div id="sandwichQuesoKiwiModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="sandwichQuesoKiwiModalTitle">
         <div class="modal-content">
-            <span class="modal-close-btn closeModalBtn" data-modal-id="sandwichQuesoKiwiModal">&times;</span>
-            <h3 class="text-2xl font-semibold text-teal-700 mb-4">Sándwich de Queso Ligero, Calabaza y Kiwi</h3>
-            <img src="https://placehold.co/600x400/F1FAEE/333333?text=Sándwich+con+Queso+Ligero+Calabaza+y+Kiwi+Amarillo" alt="[Sándwich con Queso Ligero, Calabaza y Kiwi Amarillo]" class="w-full h-64 object-cover rounded-md mb-4" onerror="this.onerror=null;this.src='https://placehold.co/600x400/cccccc/969696?text=Imagen+no+disponible';">
-            <h4 class="text-xl font-semibold text-teal-600 mt-4 mb-2">Ingredientes:</h4>
-            <ul class="list-disc list-inside mb-4 luxury-text">
+             <button class="modal-close-btn closeModalBtn" data-modal-id="sandwichQuesoKiwiModal" aria-label="Cerrar modal">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
+            </button>
+            <h3 id="sandwichQuesoKiwiModalTitle" class="text-2xl font-semibold text-teal-700 mb-4 font-poppins">Sándwich de Queso Ligero, Calabaza y Kiwi</h3>
+            <img src="https://placehold.co/600x400/F1FAEE/1A202C?text=Sándwich+Queso+Kiwi" alt="[Sándwich con Queso Ligero, Calabaza y Kiwi Amarillo]" class="w-full h-64 object-cover rounded-lg mb-4 shadow-md" onerror="this.onerror=null;this.src='https://placehold.co/600x400/cccccc/969696?text=Imagen+no+disponible';">
+            <h4 class="text-xl font-semibold text-teal-600 mt-4 mb-2 font-poppins">Ingredientes:</h4>
+            <ul class="list-disc list-inside mb-4 luxury-text space-y-1">
                 <li>Pan integral o de centeno (2 rebanadas)</li>
                 <li>Queso ligero en lonchas (bajo en grasa)</li>
                 <li>Mermelada de calabaza casera (sin azúcares añadidos o baja en azúcar)</li>
                 <li>Kiwi Zespri™ SunGold (pelado y en rodajas finas)</li>
                 <li>Hojas verdes (ej. espinacas baby o lechuga)</li>
             </ul>
-            <h4 class="text-xl font-semibold text-teal-600 mb-2">Modo de Empleo y Procedimiento:</h4>
-            <div class="luxury-text space-y-2 text-sm">
+            <h4 class="text-xl font-semibold text-teal-600 mb-2 font-poppins">Modo de Empleo y Procedimiento:</h4>
+            <div class="luxury-text space-y-2 text-sm leading-relaxed">
                 <p>1. Tostar ligeramente las rebanadas de pan si se desea.</p>
                 <p>2. Untar una fina capa de mermelada de calabaza casera en una o ambas rebanadas de pan.</p>
                 <p>3. Colocar las lonchas de queso ligero sobre una de las rebanadas.</p>
                 <p>4. Añadir las rodajas de kiwi Zespri™ SunGold sobre el queso.</p>
                 <p>5. Cubrir con unas hojas verdes.</p>
                 <p>6. Cerrar el sándwich con la otra rebanada de pan.</p>
-                <p>7. Servir.</p>
-                <p class="mt-2 text-xs italic">Fuente: Basado en Zespri, procedimiento generalizado. La mermelada de calabaza requiere preparación previa.</p>
+                <p>7. ¡A disfrutar de esta combinación agridulce!</p>
+                <p class="mt-3 text-xs italic text-gray-500">Fuente: Basado en Zespri, procedimiento generalizado. La mermelada de calabaza requiere preparación previa.</p>
             </div>
         </div>
     </div>
 
-    <div id="batidoFresaManzanaModal" class="modal">
+    <div id="batidoFresaManzanaModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="batidoFresaManzanaModalTitle">
         <div class="modal-content">
-            <span class="modal-close-btn closeModalBtn" data-modal-id="batidoFresaManzanaModal">&times;</span>
-            <h3 class="text-2xl font-semibold text-teal-700 mb-4">Batido de Fresa, Manzana y Avena</h3>
-            <img src="https://placehold.co/600x400/457B9D/FFFFFF?text=Batido+Rojo+con+Fresas+Manzana+y+Avena" alt="[Batido rojo con fresas, manzana y avena]" class="w-full h-64 object-cover rounded-md mb-4" onerror="this.onerror=null;this.src='https://placehold.co/600x400/cccccc/969696?text=Imagen+no+disponible';">
-            <h4 class="text-xl font-semibold text-teal-600 mt-4 mb-2">Ingredientes:</h4>
-            <ul class="list-disc list-inside mb-4 luxury-text">
+            <button class="modal-close-btn closeModalBtn" data-modal-id="batidoFresaManzanaModal" aria-label="Cerrar modal">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
+            </button>
+            <h3 id="batidoFresaManzanaModalTitle" class="text-2xl font-semibold text-teal-700 mb-4 font-poppins">Batido de Fresa, Manzana y Avena</h3>
+            <img src="https://placehold.co/600x400/457B9D/FFFFFF?text=Batido+Fresa+Manzana" alt="[Batido rojo con fresas, manzana y avena]" class="w-full h-64 object-cover rounded-lg mb-4 shadow-md" onerror="this.onerror=null;this.src='https://placehold.co/600x400/cccccc/969696?text=Imagen+no+disponible';">
+            <h4 class="text-xl font-semibold text-teal-600 mt-4 mb-2 font-poppins">Ingredientes:</h4>
+            <ul class="list-disc list-inside mb-4 luxury-text space-y-1">
                 <li>Fresas frescas o congeladas (1 taza, lavadas y sin tallo)</li>
                 <li>1/2 Manzana (pelada, sin corazón y troceada)</li>
                 <li>Copos de avena (2-3 cucharadas)</li>
                 <li>Leche de almendras sin azúcar (1 taza o al gusto)</li>
                 <li>Canela en polvo (una pizca)</li>
             </ul>
-            <h4 class="text-xl font-semibold text-teal-600 mb-2">Modo de Empleo y Procedimiento:</h4>
-            <div class="luxury-text space-y-2 text-sm">
+            <h4 class="text-xl font-semibold text-teal-600 mb-2 font-poppins">Modo de Empleo y Procedimiento:</h4>
+            <div class="luxury-text space-y-2 text-sm leading-relaxed">
                 <p>1. Lavar bien las fresas y la manzana. Cortar la manzana en trozos.</p>
                 <p>2. Colocar todos los ingredientes (fresas, manzana, avena, leche de almendras, canela) en una licuadora.</p>
-                <p>3. Licuar hasta obtener una mezcla homogénea y suave.</p>
+                <p>3. Licuar hasta obtener una mezcla homogénea y suave. ¡Debe quedar cremoso!</p>
                 <p>4. Si está muy espeso, añadir un poco más de leche de almendras hasta alcanzar la consistencia deseada.</p>
-                <p>5. Servir inmediatamente.</p>
-                <p class="mt-2 text-xs italic">Fuente: Okdiario.</p>
+                <p>5. Servir inmediatamente y disfrutar de este impulso de energía.</p>
+                <p class="mt-3 text-xs italic text-gray-500">Fuente: Okdiario.</p>
             </div>
         </div>
     </div>
 
-    <div id="tortillaAvenaEspinacasModal" class="modal">
+    <div id="tortillaAvenaEspinacasModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="tortillaAvenaEspinacasModalTitle">
         <div class="modal-content">
-            <span class="modal-close-btn closeModalBtn" data-modal-id="tortillaAvenaEspinacasModal">&times;</span>
-            <h3 class="text-2xl font-semibold text-teal-700 mb-4">Tortilla de Avena y Espinacas</h3>
-            <img src="https://placehold.co/600x400/1D3557/FFFFFF?text=Tortilla+Verde+con+Avena+y+Espinacas" alt="[Tortilla verde con avena y espinacas]" class="w-full h-64 object-cover rounded-md mb-4" onerror="this.onerror=null;this.src='https://placehold.co/600x400/cccccc/969696?text=Imagen+no+disponible';">
-            <h4 class="text-xl font-semibold text-teal-600 mt-4 mb-2">Ingredientes:</h4>
-            <ul class="list-disc list-inside mb-4 luxury-text">
+            <button class="modal-close-btn closeModalBtn" data-modal-id="tortillaAvenaEspinacasModal" aria-label="Cerrar modal">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
+            </button>
+            <h3 id="tortillaAvenaEspinacasModalTitle" class="text-2xl font-semibold text-teal-700 mb-4 font-poppins">Tortilla de Avena y Espinacas</h3>
+            <img src="https://placehold.co/600x400/1D3557/FFFFFF?text=Tortilla+Avena+Espinacas" alt="[Tortilla verde con avena y espinacas]" class="w-full h-64 object-cover rounded-lg mb-4 shadow-md" onerror="this.onerror=null;this.src='https://placehold.co/600x400/cccccc/969696?text=Imagen+no+disponible';">
+            <h4 class="text-xl font-semibold text-teal-600 mt-4 mb-2 font-poppins">Ingredientes:</h4>
+            <ul class="list-disc list-inside mb-4 luxury-text space-y-1">
                 <li>Huevos (2 unidades)</li>
                 <li>Harina de avena (2-3 cucharadas)</li>
                 <li>Espinacas frescas picadas (un buen puñado)</li>
                 <li>Sal (una pizca)</li>
                 <li>Aceite de oliva virgen extra (unas gotas para la sartén)</li>
             </ul>
-            <h4 class="text-xl font-semibold text-teal-600 mb-2">Modo de Empleo y Procedimiento:</h4>
-            <div class="luxury-text space-y-2 text-sm">
+            <h4 class="text-xl font-semibold text-teal-600 mb-2 font-poppins">Modo de Empleo y Procedimiento:</h4>
+            <div class="luxury-text space-y-2 text-sm leading-relaxed">
                 <p>1. En un bol, batir los huevos con una pizca de sal.</p>
                 <p>2. Incorporar la harina de avena y mezclar bien hasta que no haya grumos.</p>
-                <p>3. Añadir las espinacas picadas a la mezcla de huevo y avena.</p>
+                <p>3. Añadir las espinacas picadas a la mezcla de huevo y avena. ¡Que quede bien verde!</p>
                 <p>4. Calentar una sartén antiadherente con unas gotas de aceite de oliva a fuego medio.</p>
                 <p>5. Verter la mezcla en la sartén caliente.</p>
                 <p>6. Cocinar durante unos minutos por cada lado, hasta que esté dorada y cuajada.</p>
-                <p>7. Servir caliente.</p>
-                <p class="mt-2 text-xs italic">Fuente: Okdiario.</p>
+                <p>7. Servir caliente. Ideal para un desayuno o cena ligera.</p>
+                <p class="mt-3 text-xs italic text-gray-500">Fuente: Okdiario.</p>
             </div>
         </div>
     </div>
 
-    <div id="bruschettaTomateModal" class="modal">
+    <div id="bruschettaTomateModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="bruschettaTomateModalTitle">
         <div class="modal-content">
-            <span class="modal-close-btn closeModalBtn" data-modal-id="bruschettaTomateModal">&times;</span>
-            <h3 class="text-2xl font-semibold text-teal-700 mb-4">Bruschetta de Tomate y Albahaca</h3>
-            <img src="https://placehold.co/600x400/E63946/FFFFFF?text=Bruschetta+Italiana+con+Tomate+Fresco+y+Albahaca" alt="[Bruschetta italiana con tomate fresco y albahaca]" class="w-full h-64 object-cover rounded-md mb-4" onerror="this.onerror=null;this.src='https://placehold.co/600x400/cccccc/969696?text=Imagen+no+disponible';">
-            <h4 class="text-xl font-semibold text-teal-600 mt-4 mb-2">Ingredientes:</h4>
-            <ul class="list-disc list-inside mb-4 luxury-text">
+            <button class="modal-close-btn closeModalBtn" data-modal-id="bruschettaTomateModal" aria-label="Cerrar modal">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
+            </button>
+            <h3 id="bruschettaTomateModalTitle" class="text-2xl font-semibold text-teal-700 mb-4 font-poppins">Bruschetta de Tomate y Albahaca</h3>
+            <img src="https://placehold.co/600x400/E63946/FFFFFF?text=Bruschetta+Tomate+Albahaca" alt="[Bruschetta italiana con tomate fresco y albahaca]" class="w-full h-64 object-cover rounded-lg mb-4 shadow-md" onerror="this.onerror=null;this.src='https://placehold.co/600x400/cccccc/969696?text=Imagen+no+disponible';">
+            <h4 class="text-xl font-semibold text-teal-600 mt-4 mb-2 font-poppins">Ingredientes:</h4>
+            <ul class="list-disc list-inside mb-4 luxury-text space-y-1">
                 <li>Rebanadas de pan integral o de grano entero (ligeramente tostadas)</li>
                 <li>Tomates maduros (picados en cubos pequeños)</li>
                 <li>Albahaca fresca (picada)</li>
@@ -393,25 +461,27 @@
                 <li>Aceite de oliva virgen extra</li>
                 <li>Sal y pimienta al gusto</li>
             </ul>
-            <h4 class="text-xl font-semibold text-teal-600 mb-2">Modo de Empleo y Procedimiento:</h4>
-            <div class="luxury-text space-y-2 text-sm">
-                <p>1. Tostar ligeramente las rebanadas de pan. Si se usa ajo, frotar suavemente un diente de ajo cortado sobre la superficie del pan tostado.</p>
+            <h4 class="text-xl font-semibold text-teal-600 mb-2 font-poppins">Modo de Empleo y Procedimiento:</h4>
+            <div class="luxury-text space-y-2 text-sm leading-relaxed">
+                <p>1. Tostar ligeramente las rebanadas de pan. Si se usa ajo, frotar suavemente un diente de ajo cortado sobre la superficie del pan tostado para un toque aromático.</p>
                 <p>2. En un bol, mezclar los tomates picados con la albahaca fresca.</p>
                 <p>3. Añadir un chorrito de aceite de oliva virgen extra, sal y pimienta al gusto. Mezclar bien.</p>
                 <p>4. Cubrir cada rebanada de pan tostado con la mezcla de tomate y albahaca.</p>
-                <p>5. Servir inmediatamente.</p>
-                <p class="mt-2 text-xs italic">Fuente: Clínica Mayo, receta generalizada y adaptada.</p>
+                <p>5. Servir inmediatamente para disfrutar de su frescura.</p>
+                <p class="mt-3 text-xs italic text-gray-500">Fuente: Clínica Mayo, receta generalizada y adaptada.</p>
             </div>
         </div>
     </div>
 
-    <div id="polloCordonBleuModal" class="modal">
+    <div id="polloCordonBleuModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="polloCordonBleuModalTitle">
         <div class="modal-content">
-            <span class="modal-close-btn closeModalBtn" data-modal-id="polloCordonBleuModal">&times;</span>
-            <h3 class="text-2xl font-semibold text-teal-700 mb-4">Pollo Cordon Bleu (Versión Saludable)</h3>
-            <img src="https://placehold.co/600x400/A8DADC/333333?text=Pechuga+de+Pollo+Cordon+Bleu+Horneada" alt="[Pechuga de pollo Cordon Bleu horneada]" class="w-full h-64 object-cover rounded-md mb-4" onerror="this.onerror=null;this.src='https://placehold.co/600x400/cccccc/969696?text=Imagen+no+disponible';">
-            <h4 class="text-xl font-semibold text-teal-600 mt-4 mb-2">Ingredientes:</h4>
-            <ul class="list-disc list-inside mb-4 luxury-text">
+            <button class="modal-close-btn closeModalBtn" data-modal-id="polloCordonBleuModal" aria-label="Cerrar modal">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
+            </button>
+            <h3 id="polloCordonBleuModalTitle" class="text-2xl font-semibold text-teal-700 mb-4 font-poppins">Pollo Cordon Bleu (Versión Saludable)</h3>
+            <img src="https://placehold.co/600x400/2A9D8F/FFFFFF?text=Pollo+Cordon+Bleu+Saludable" alt="[Pechuga de pollo Cordon Bleu horneada]" class="w-full h-64 object-cover rounded-lg mb-4 shadow-md" onerror="this.onerror=null;this.src='https://placehold.co/600x400/cccccc/969696?text=Imagen+no+disponible';">
+            <h4 class="text-xl font-semibold text-teal-600 mt-4 mb-2 font-poppins">Ingredientes:</h4>
+            <ul class="list-disc list-inside mb-4 luxury-text space-y-1">
                 <li>Pechugas de pollo (fileteadas finas)</li>
                 <li>Jamón cocido bajo en sodio (lonchas finas)</li>
                 <li>Queso suizo o bajo en grasa (lonchas finas)</li>
@@ -420,28 +490,30 @@
                 <li>Especias al gusto (ej. pimentón, ajo en polvo, perejil seco)</li>
                 <li>Aceite de oliva en spray</li>
             </ul>
-            <h4 class="text-xl font-semibold text-teal-600 mb-2">Modo de Empleo y Procedimiento:</h4>
-            <div class="luxury-text space-y-2 text-sm">
+            <h4 class="text-xl font-semibold text-teal-600 mb-2 font-poppins">Modo de Empleo y Procedimiento:</h4>
+            <div class="luxury-text space-y-2 text-sm leading-relaxed">
                 <p>1. Precalentar el horno a 200°C (400°F).</p>
                 <p>2. Colocar una loncha de jamón y una de queso sobre cada filete de pechuga de pollo.</p>
                 <p>3. Enrollar las pechugas y asegurar con palillos si es necesario.</p>
-                <p>4. Pasar cada rollito de pollo por el huevo batido y luego por el pan rallado (mezclado con especias).</p>
+                <p>4. Pasar cada rollito de pollo por el huevo batido y luego por el pan rallado (mezclado con especias). Asegúrate de que quede bien cubierto.</p>
                 <p>5. Colocar los rollitos en una bandeja de horno ligeramente engrasada con aceite en spray.</p>
-                <p>6. Rociar ligeramente la parte superior de los rollitos con aceite en spray.</p>
-                <p>7. Hornear durante 25-30 minutos, o hasta que el pollo esté bien cocido y el rebozado dorado.</p>
-                <p>8. Retirar los palillos antes de servir.</p>
-                <p class="mt-2 text-xs italic">Fuente: Clínica Mayo, receta generalizada y adaptada para ser más saludable.</p>
+                <p>6. Rociar ligeramente la parte superior de los rollitos con aceite en spray para un dorado extra.</p>
+                <p>7. Hornear durante 25-30 minutos, o hasta que el pollo esté bien cocido por dentro y el rebozado crujiente y dorado.</p>
+                <p>8. Retirar los palillos antes de servir. ¡Un clásico más ligero!</p>
+                <p class="mt-3 text-xs italic text-gray-500">Fuente: Clínica Mayo, receta generalizada y adaptada para ser más saludable.</p>
             </div>
         </div>
     </div>
 
-    <div id="besanChillaModal" class="modal">
+    <div id="besanChillaModal" class="modal" role="dialog" aria-modal="true" aria-labelledby="besanChillaModalTitle">
         <div class="modal-content">
-            <span class="modal-close-btn closeModalBtn" data-modal-id="besanChillaModal">&times;</span>
-            <h3 class="text-2xl font-semibold text-teal-700 mb-4">Besan Chilla Pakistaní</h3>
-            <img src="https://placehold.co/600x400/F1FAEE/333333?text=Panqueques+Amarillos+Besan+Chilla+con+Hierbas" alt="[Panqueques amarillos Besan Chilla con hierbas]" class="w-full h-64 object-cover rounded-md mb-4" onerror="this.onerror=null;this.src='https://placehold.co/600x400/cccccc/969696?text=Imagen+no+disponible';">
-            <h4 class="text-xl font-semibold text-teal-600 mt-4 mb-2">Ingredientes:</h4>
-            <ul class="list-disc list-inside mb-4 luxury-text">
+            <button class="modal-close-btn closeModalBtn" data-modal-id="besanChillaModal" aria-label="Cerrar modal">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" d="M6 18L18 6M6 6l12 12" /></svg>
+            </button>
+            <h3 id="besanChillaModalTitle" class="text-2xl font-semibold text-teal-700 mb-4 font-poppins">Besan Chilla Pakistaní</h3>
+            <img src="https://placehold.co/600x400/E9C46A/1A202C?text=Besan+Chilla+Pakistaní" alt="[Panqueques amarillos Besan Chilla con hierbas]" class="w-full h-64 object-cover rounded-lg mb-4 shadow-md" onerror="this.onerror=null;this.src='https://placehold.co/600x400/cccccc/969696?text=Imagen+no+disponible';">
+            <h4 class="text-xl font-semibold text-teal-600 mt-4 mb-2 font-poppins">Ingredientes:</h4>
+            <ul class="list-disc list-inside mb-4 luxury-text space-y-1">
                 <li>Harina de garbanzo (Besan, 1 taza)</li>
                 <li>Agua (aproximadamente 3/4 - 1 taza, para hacer una masa)</li>
                 <li>Cebolla pequeña (finamente picada)</li>
@@ -453,38 +525,46 @@
                 <li>Sal al gusto</li>
                 <li>Aceite vegetal o ghee (para cocinar)</li>
             </ul>
-            <h4 class="text-xl font-semibold text-teal-600 mb-2">Modo de Empleo y Procedimiento:</h4>
-            <div class="luxury-text space-y-2 text-sm">
+            <h4 class="text-xl font-semibold text-teal-600 mb-2 font-poppins">Modo de Empleo y Procedimiento:</h4>
+            <div class="luxury-text space-y-2 text-sm leading-relaxed">
                 <p>1. En un bol, mezclar la harina de garbanzo con la cúrcuma y la sal.</p>
                 <p>2. Añadir gradualmente agua mientras se bate, hasta obtener una masa suave y de consistencia similar a la de los panqueques (ni muy espesa ni muy líquida).</p>
-                <p>3. Incorporar la cebolla picada, el tomate, el chile verde (si se usa), el cilantro y el jengibre rallado. Mezclar bien.</p>
+                <p>3. Incorporar la cebolla picada, el tomate, el chile verde (si se usa), el cilantro y el jengibre rallado. Mezclar bien todos los sabores.</p>
                 <p>4. Calentar una sartén antiadherente o tawa a fuego medio y engrasar ligeramente con aceite.</p>
                 <p>5. Verter un cucharón de la masa en la sartén caliente y extenderla suavemente en forma circular, como un panqueque delgado.</p>
                 <p>6. Cocinar durante 2-3 minutos por cada lado, o hasta que esté dorado y cocido por completo. Rociar un poco de aceite alrededor de los bordes mientras se cocina si es necesario.</p>
-                <p>7. Repetir con el resto de la masa.</p>
-                <p>8. Servir caliente, solo o con chutney de menta o yogur.</p>
-                <p class="mt-2 text-xs italic">Fuente: Diabetes Food Hub, receta generalizada.</p>
+                <p>7. Repetir con el resto de la masa hasta formar todos los chillas.</p>
+                <p>8. Servir caliente, solo o con chutney de menta o yogur natural. ¡Deliciosos y nutritivos!</p>
+                <p class="mt-3 text-xs italic text-gray-500">Fuente: Diabetes Food Hub, receta generalizada.</p>
             </div>
         </div>
     </div>
-    <section id="remedies" class="py-16 luxury-bg-light searchable-content">
+    
+    <section id="remedies" class="py-20 luxury-bg-light searchable-content">
         <div class="container mx-auto px-6">
-            <h2 class="section-title luxury-text">Remedios Caseros y Apoyo Natural</h2>
-            <p class="text-center mb-12 text-lg luxury-text">Algunos remedios tradicionales e ingredientes naturales pueden ofrecer beneficios. Siempre consulta con tu médico.</p>
+            <h2 class="section-title luxury-text">Remedios Caseros y <span class="text-lime-600">Apoyo Natural</span></h2>
+            <p class="text-center mb-12 text-lg luxury-text max-w-2xl mx-auto">Algunos remedios tradicionales e ingredientes naturales pueden ofrecer beneficios complementarios. Recuerda siempre consultar con tu profesional de la salud antes de probarlos.</p>
             
             <div class="grid md:grid-cols-2 gap-10">
-                <div>
-                    <h3 class="text-2xl font-semibold mb-6 text-teal-600">Remedios y Consejos Nacionales (España)</h3>
-                    <div class="space-y-4">
-                        <div class="p-6 bg-white rounded-lg shadow-lg">
+                <div class="bg-white p-8 rounded-xl shadow-lg hover:shadow-2xl transition-shadow duration-300">
+                    <h3 class="text-2xl font-semibold mb-6 text-teal-600 font-poppins flex items-center">
+                        <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 mr-3 text-lime-500" viewBox="0 0 20 20" fill="currentColor"><path d="M10.707 2.293a1 1 0 00-1.414 0l-7 7a1 1 0 001.414 1.414L4 10.414V17a1 1 0 001 1h2a1 1 0 001-1v-2a1 1 0 011-1h2a1 1 0 011 1v2a1 1 0 001 1h2a1 1 0 001-1v-6.586l.293.293a1 1 0 001.414-1.414l-7-7z" /></svg>
+                        Remedios y Consejos Nacionales (España)
+                    </h3>
+                    <div class="space-y-6">
+                        <div>
                             <h4 class="font-semibold text-lg text-teal-700 mb-2">Plantas Medicinales (ILAPHAR)</h4>
-                            <img src="https://placehold.co/300x200/C6E2E9/333333?text=Ramas+de+Canela+y+Semillas+de+Fenogreco" alt="[Ramas de canela y semillas de fenogreco]" class="rounded-md shadow-md my-3 float-right ml-4 w-32" onerror="this.onerror=null;this.src='https://placehold.co/300x200/cccccc/969696?text=Imagen+no+disponible';">
-                            <p class="luxury-text"><strong class="text-amber-700">Canela:</strong> Podría mejorar la sensibilidad a la insulina. Dosis de 1-6g/día en estudios.</p>
-                            <p class="luxury-text"><strong class="text-amber-700">Fenogreco (Alhova):</strong> Rico en fibra, efecto hipoglucemiante. Precaución por posibles molestias gastrointestinales.</p>
+                            <div class="flex items-start">
+                                <img src="https://placehold.co/150x100/C6E2E9/1A202C?text=Canela+y+Fenogreco" alt="[Ramas de canela y semillas de fenogreco]" class="rounded-lg shadow-md mr-4 w-24 h-16 object-cover flex-shrink-0" onerror="this.onerror=null;this.src='https://placehold.co/150x100/cccccc/969696?text=Imagen+no+disponible';">
+                                <div class="luxury-text text-sm">
+                                    <p><strong class="text-amber-600">Canela:</strong> Podría mejorar la sensibilidad a la insulina. Dosis de 1-6g/día en estudios.</p>
+                                    <p><strong class="text-amber-600">Fenogreco (Alhova):</strong> Rico en fibra, efecto hipoglucemiante. Precaución por posibles molestias gastrointestinales.</p>
+                                </div>
+                            </div>
                         </div>
-                        <div class="p-6 bg-white rounded-lg shadow-lg">
+                        <div>
                             <h4 class="font-semibold text-lg text-teal-700 mb-2">Acciones de Estilo de Vida (Teva Farmacia)</h4>
-                            <ul class="list-disc list-inside luxury-text space-y-1">
+                            <ul class="list-disc list-inside luxury-text space-y-1 text-sm pl-4">
                                 <li>Dieta saludable y natural.</li>
                                 <li>Planificar comidas (método del plato).</li>
                                 <li>Leer etiquetas, beber agua, ejercicio regular.</li>
@@ -494,21 +574,26 @@
                     </div>
                 </div>
 
-                <div>
-                    <h3 class="text-2xl font-semibold mb-6 text-teal-600">Remedios Internacionales</h3>
-                    <div class="space-y-4">
-                        <div class="p-6 bg-white rounded-lg shadow-lg">
-                             <img src="https://placehold.co/300x200/FFD166/333333?text=Variedad+de+Hierbas+Ayurvédicas+y+Especias" alt="[Variedad de hierbas ayurvédicas y especias]" class="rounded-md shadow-md my-3 float-right ml-4 w-32" onerror="this.onerror=null;this.src='https://placehold.co/300x200/cccccc/969696?text=Imagen+no+disponible';">
+                <div class="bg-white p-8 rounded-xl shadow-lg hover:shadow-2xl transition-shadow duration-300">
+                    <h3 class="text-2xl font-semibold mb-6 text-teal-600 font-poppins flex items-center">
+                         <svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7 mr-3 text-lime-500" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM4.332 8.027a6.002 6.002 0 0111.336 0l2.013 5.435A1 1 0 0116.973 15H3.027a1 1 0 01-.708-1.538l2.013-5.435z" clip-rule="evenodd" /></svg>
+                        Remedios Internacionales
+                    </h3>
+                    <div class="space-y-6">
+                        <div>
                             <h4 class="font-semibold text-lg text-teal-700 mb-2">Remedios Herbales (Times of India)</h4>
-                            <p class="luxury-text">Incluyen neem, hojas de mango, jugo de karela (melón amargo), semillas de jamun, jengibre, fenogreco, hojas de curry, canela y aloe vera.</p>
+                             <div class="flex items-start">
+                                <img src="https://placehold.co/150x100/FFD166/1A202C?text=Hierbas+y+Especias" alt="[Variedad de hierbas ayurvédicas y especias]" class="rounded-lg shadow-md mr-4 w-24 h-16 object-cover flex-shrink-0" onerror="this.onerror=null;this.src='https://placehold.co/150x100/cccccc/969696?text=Imagen+no+disponible';">
+                                <p class="luxury-text text-sm">Incluyen neem, hojas de mango, jugo de karela (melón amargo), semillas de jamun, jengibre, fenogreco, hojas de curry, canela y aloe vera.</p>
+                            </div>
                         </div>
-                        <div class="p-6 bg-white rounded-lg shadow-lg">
+                        <div>
                             <h4 class="font-semibold text-lg text-teal-700 mb-2">Remedios Ayurvédicos (One World Ayurveda)</h4>
-                            <p class="luxury-text">Té de fenogreco, jugo de melón amargo, mezclas de hierbas como Guduchi, Amalaki, Gokshura, Triphala y cúrcuma.</p>
+                            <p class="luxury-text text-sm">Té de fenogreco, jugo de melón amargo, mezclas de hierbas como Guduchi, Amalaki, Gokshura, Triphala y cúrcuma.</p>
                         </div>
-                         <div class="p-6 bg-white rounded-lg shadow-lg">
+                         <div>
                             <h4 class="font-semibold text-lg text-teal-700 mb-2">Otras Sustancias Naturales</h4>
-                            <p class="luxury-text">Vinagre de sidra de manzana, magnesio, cromo, gymnema, nopal.</p>
+                            <p class="luxury-text text-sm">Vinagre de sidra de manzana, magnesio, cromo, gymnema, nopal.</p>
                         </div>
                     </div>
                 </div>
@@ -516,129 +601,91 @@
         </div>
     </section>
 
-    <section id="key-ingredients" class="py-16 searchable-content">
+    <section id="key-ingredients" class="py-20 searchable-content">
         <div class="container mx-auto px-6">
-            <h2 class="section-title luxury-text">Ingredientes Clave y Grupos de Alimentos</h2>
-            <p class="text-center mb-12 text-lg luxury-text">Una dieta equilibrada debe incluir variedad y prestar atención a ciertos ingredientes.</p>
+            <h2 class="section-title luxury-text">Ingredientes Clave y <span class="text-lime-600">Grupos de Alimentos</span></h2>
+            <p class="text-center mb-12 text-lg luxury-text max-w-2xl mx-auto">Una dieta equilibrada debe incluir variedad y prestar atención a ciertos ingredientes que pueden ser tus grandes aliados.</p>
             <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
                 <div class="card">
-                    <img src="https://placehold.co/600x400/90BE6D/FFFFFF?text=Bodegón+de+Frutas+y+Verduras+Coloridas" alt="[Bodegón de frutas y verduras coloridas y frescas]" class="w-full h-56 object-cover" onerror="this.onerror=null;this.src='https://placehold.co/600x400/cccccc/969696?text=Imagen+no+disponible';">
+                    <img src="https://placehold.co/600x400/90BE6D/FFFFFF?text=Bodegón+Frutas+y+Verduras" alt="[Bodegón de frutas y verduras coloridas y frescas]" class="w-full h-56 object-cover" onerror="this.onerror=null;this.src='https://placehold.co/600x400/cccccc/969696?text=Imagen+no+disponible';">
                     <div class="card-content">
-                        <h4 class="text-xl font-semibold mb-2 text-teal-700">Frutas y Verduras</h4>
-                        <p class="text-sm text-gray-600">Esenciales por vitaminas, minerales y fibra. Variedad: hojas verdes, brócoli, tomate, manzana, kiwi.</p>
+                        <h4 class="text-xl font-semibold mb-2 text-teal-700 font-poppins">Frutas y Verduras</h4>
+                        <p>Esenciales por vitaminas, minerales y fibra. Variedad: hojas verdes, brócoli, tomate, manzana, kiwi.</p>
                     </div>
                 </div>
                 <div class="card">
-                    <img src="https://placehold.co/600x400/F9C74F/333333?text=Selección+de+Granos+Integrales+y+Cereales" alt="[Selección de granos integrales y cereales]" class="w-full h-56 object-cover" onerror="this.onerror=null;this.src='https://placehold.co/600x400/cccccc/969696?text=Imagen+no+disponible';">
+                    <img src="https://placehold.co/600x400/F9C74F/1A202C?text=Granos+Integrales+Variados" alt="[Selección de granos integrales y cereales]" class="w-full h-56 object-cover" onerror="this.onerror=null;this.src='https://placehold.co/600x400/cccccc/969696?text=Imagen+no+disponible';">
                     <div class="card-content">
-                        <h4 class="text-xl font-semibold mb-2 text-teal-700">Granos Integrales</h4>
-                        <p class="text-sm text-gray-600">Arroz integral, avena, quinoa. Preferibles por fibra y energía sostenida.</p>
+                        <h4 class="text-xl font-semibold mb-2 text-teal-700 font-poppins">Granos Integrales</h4>
+                        <p>Arroz integral, avena, quinoa. Preferibles por fibra y energía sostenida.</p>
                     </div>
                 </div>
                 <div class="card">
-                    <img src="https://placehold.co/600x400/F8961E/FFFFFF?text=Fuentes+Variadas+de+Proteínas+Magras" alt="[Fuentes variadas de proteínas magras como pescado, pollo y legumbres]" class="w-full h-56 object-cover" onerror="this.onerror=null;this.src='https://placehold.co/600x400/cccccc/969696?text=Imagen+no+disponible';">
+                    <img src="https://placehold.co/600x400/F8961E/FFFFFF?text=Proteínas+Magras+Diversas" alt="[Fuentes variadas de proteínas magras como pescado, pollo y legumbres]" class="w-full h-56 object-cover" onerror="this.onerror=null;this.src='https://placehold.co/600x400/cccccc/969696?text=Imagen+no+disponible';">
                     <div class="card-content">
-                        <h4 class="text-xl font-semibold mb-2 text-teal-700">Proteínas Magras</h4>
-                        <p class="text-sm text-gray-600">Pollo, pescado, huevos, legumbres, tofu. Para saciedad y salud muscular.</p>
+                        <h4 class="text-xl font-semibold mb-2 text-teal-700 font-poppins">Proteínas Magras</h4>
+                        <p>Pollo, pescado, huevos, legumbres, tofu. Para saciedad y salud muscular.</p>
                     </div>
                 </div>
-                <div class="card col-span-1 md:col-span-2 lg:col-span-3">
-                    <div class="md:flex">
-                        <img src="https://placehold.co/600x400/84A98C/FFFFFF?text=Kiwis+Verdes+y+Amarillos+Frescos+y+Cortados" alt="[Kiwis verdes y amarillos frescos y cortados]" class="md:w-1/3 h-56 md:h-auto object-cover" onerror="this.onerror=null;this.src='https://placehold.co/600x400/cccccc/969696?text=Imagen+no+disponible';">
+                <div class="card col-span-1 md:col-span-2 lg:col-span-3 bg-lime-50 hover:border-amber-500">
+                    <div class="md:flex items-center">
+                        <img src="https://placehold.co/600x400/84A98C/FFFFFF?text=Kiwis+Frescos+y+Jugosos" alt="[Kiwis verdes y amarillos frescos y cortados]" class="md:w-1/3 h-56 md:h-auto object-cover rounded-l-xl md:rounded-l-xl md:rounded-r-none" onerror="this.onerror=null;this.src='https://placehold.co/600x400/cccccc/969696?text=Imagen+no+disponible';">
                         <div class="card-content md:w-2/3">
-                            <h4 class="text-2xl font-semibold mb-3 text-teal-700">Ingrediente Estrella: Kiwi</h4>
-                            <p class="text-gray-700 mb-4">El kiwi destaca por su bajo índice glucémico y alto contenido en fibra, lo que ayuda a ralentizar la absorción de azúcar. Es un excelente aliado para las personas con diabetes.</p>
+                            <h4 class="text-2xl font-semibold mb-3 text-lime-700 font-poppins">Ingrediente Estrella: Kiwi</h4>
+                            <p class="text-gray-700 mb-4 leading-relaxed">El kiwi destaca por su bajo índice glucémico y alto contenido en fibra, lo que ayuda a ralentizar la absorción de azúcar. Es un excelente aliado para las personas con diabetes.</p>
                             <ul class="list-disc list-inside text-gray-600 space-y-1">
                                 <li>Ayuda a controlar los niveles de glucosa.</li>
                                 <li>Rico en Vitamina C y antioxidantes.</li>
-                                <li>Favorece la digestión.</li>
+                                <li>Favorece la digestión y ¡es delicioso!</li>
                             </ul>
                         </div>
                     </div>
                 </div>
             </div>
-             <h3 class="text-2xl font-semibold mt-12 mb-6 text-center text-teal-600">Otros Ingredientes con Potenciales Beneficios</h3>
-            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 text-center">
-                <div class="p-4 bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow">
-                    <img src="https://placehold.co/100x100/D4A373/FFFFFF?text=Canela+en+Rama+y+Polvo" alt="[Icono de Canela en rama y polvo]" class="mx-auto mb-2 h-16 w-16 object-contain" onerror="this.onerror=null;this.src='https://placehold.co/100x100/cccccc/969696?text=Imagen+no+disponible';">
-                    <p class="font-semibold text-teal-700">Canela</p>
+             <h3 class="text-3xl font-semibold mt-16 mb-8 text-center text-teal-600 font-poppins">Otros Ingredientes con Potenciales Beneficios</h3>
+            <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-6 text-center">
+                {[ "Canela", "Canela en Rama y Polvo", "D4A373"],
+                 [ "Fenogreco", "Semillas de Fenogreco", "E76F51"],
+                 [ "Melón Amargo", "Melón Amargo Verde", "A98467"],
+                 [ "Gymnema", "Hojas de Gymnema Sylvestre", "6A994E"],
+                 [ "Ajo", "Dientes de Ajo Frescos", "BC4749"],
+                 [ "Aloe Vera", "Hoja Carnosa de Aloe Vera", "38A3A5"],
+                 [ "Jengibre", "Raíz de Jengibre Fresca", "F2CC8F"],
+                 [ "Vinagre de Sidra", "Botella de Vinagre de Manzana", "E07A5F"]
+                ].map(ing => `
+                <div class="p-6 bg-white rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 transform hover:scale-105">
+                    <img src="https://placehold.co/100x100/${ing[2]}/FFFFFF?text=${ing[1].replace(/\s/g,'+')}" alt="[Icono de ${ing[0]}]" class="mx-auto mb-3 h-20 w-20 object-contain rounded-full bg-gray-100 p-2" onerror="this.onerror=null;this.src='https://placehold.co/100x100/cccccc/969696?text=Imagen+no+disponible';">
+                    <p class="font-semibold text-teal-700 font-poppins">${ing[0]}</p>
                 </div>
-                <div class="p-4 bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow">
-                    <img src="https://placehold.co/100x100/E76F51/FFFFFF?text=Semillas+de+Fenogreco" alt="[Icono de Semillas de Fenogreco]" class="mx-auto mb-2 h-16 w-16 object-contain" onerror="this.onerror=null;this.src='https://placehold.co/100x100/cccccc/969696?text=Imagen+no+disponible';">
-                    <p class="font-semibold text-teal-700">Fenogreco</p>
-                </div>
-                <div class="p-4 bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow">
-                    <img src="https://placehold.co/100x100/A98467/FFFFFF?text=Melón+Amargo+Verde" alt="[Icono de Melón Amargo verde]" class="mx-auto mb-2 h-16 w-16 object-contain" onerror="this.onerror=null;this.src='https://placehold.co/100x100/cccccc/969696?text=Imagen+no+disponible';">
-                    <p class="font-semibold text-teal-700">Melón Amargo</p>
-                </div>
-                <div class="p-4 bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow">
-                    <img src="https://placehold.co/100x100/6A994E/FFFFFF?text=Hojas+de+Gymnema+Sylvestre" alt="[Icono de Hojas de Gymnema Sylvestre]" class="mx-auto mb-2 h-16 w-16 object-contain" onerror="this.onerror=null;this.src='https://placehold.co/100x100/cccccc/969696?text=Imagen+no+disponible';">
-                    <p class="font-semibold text-teal-700">Gymnema</p>
-                </div>
-                 <div class="p-4 bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow">
-                    <img src="https://placehold.co/100x100/BC4749/FFFFFF?text=Dientes+de+Ajo" alt="[Icono de Dientes de Ajo]" class="mx-auto mb-2 h-16 w-16 object-contain" onerror="this.onerror=null;this.src='https://placehold.co/100x100/cccccc/969696?text=Imagen+no+disponible';">
-                    <p class="font-semibold text-teal-700">Ajo</p>
-                </div>
-                <div class="p-4 bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow">
-                    <img src="https://placehold.co/100x100/38A3A5/FFFFFF?text=Hoja+de+Aloe+Vera" alt="[Icono de Hoja de Aloe Vera]" class="mx-auto mb-2 h-16 w-16 object-contain" onerror="this.onerror=null;this.src='https://placehold.co/100x100/cccccc/969696?text=Imagen+no+disponible';">
-                    <p class="font-semibold text-teal-700">Aloe Vera</p>
-                </div>
-                <div class="p-4 bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow">
-                    <img src="https://placehold.co/100x100/F2CC8F/333333?text=Raíz+de+Jengibre" alt="[Icono de Raíz de Jengibre]" class="mx-auto mb-2 h-16 w-16 object-contain" onerror="this.onerror=null;this.src='https://placehold.co/100x100/cccccc/969696?text=Imagen+no+disponible';">
-                    <p class="font-semibold text-teal-700">Jengibre</p>
-                </div>
-                 <div class="p-4 bg-white rounded-lg shadow-md hover:shadow-xl transition-shadow">
-                    <img src="https://placehold.co/100x100/E07A5F/FFFFFF?text=Botella+de+Vinagre+de+Manzana" alt="[Icono de Botella de Vinagre de Manzana]" class="mx-auto mb-2 h-16 w-16 object-contain" onerror="this.onerror=null;this.src='https://placehold.co/100x100/cccccc/969696?text=Imagen+no+disponible';">
-                    <p class="font-semibold text-teal-700">Vinagre de Sidra</p>
-                </div>
+                `).join('')}
             </div>
         </div>
     </section>
 
-    <section id="lifestyle-tips" class="py-16 luxury-bg-light searchable-content">
+    <section id="lifestyle-tips" class="py-20 luxury-bg-light searchable-content">
         <div class="container mx-auto px-6">
-            <h2 class="section-title luxury-text">Recomendaciones Profesionales y Consejos Prácticos</h2>
-            <div class="grid md:grid-cols-2 gap-10 items-start">
+            <h2 class="section-title luxury-text">Recomendaciones Profesionales y <span class="text-lime-600">Consejos Prácticos</span></h2>
+            <div class="grid md:grid-cols-2 gap-12 items-center">
                 <div>
-                    <img src="https://placehold.co/600x450/52796F/FFFFFF?text=Persona+Realizando+Ejercicio+al+Aire+Libre" alt="[Persona realizando ejercicio al aire libre o planificando comidas saludables]" class="rounded-lg shadow-xl mb-6" onerror="this.onerror=null;this.src='https://placehold.co/600x450/cccccc/969696?text=Imagen+no+disponible';">
+                    <img src="https://placehold.co/600x450/52BE80/FFFFFF?text=Estilo+de+Vida+Activo+y+Saludable" alt="[Persona realizando ejercicio al aire libre o planificando comidas saludables]" class="rounded-xl shadow-xl mb-6" onerror="this.onerror=null;this.src='https://placehold.co/600x450/cccccc/969696?text=Imagen+no+disponible';">
                 </div>
-                <div class="space-y-6">
+                <div class="space-y-8">
+                    {[
+                        { title: "Planificación de Comidas", text: "Elaborar menús semanales y listas de compras detalladas asegura una ingesta equilibrada y evita decisiones impulsivas.", icon: '<svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" viewBox="0 0 20 20" fill="currentColor"><path d="M9 2a1 1 0 000 2h2a1 1 0 100-2H9z" /><path fill-rule="evenodd" d="M4 5a2 2 0 012-2h8a2 2 0 012 2v10a2 2 0 01-2 2H6a2 2 0 01-2-2V5zm3 4a1 1 0 000 2h.01a1 1 0 100-2H7zm3 0a1 1 0 000 2h3a1 1 0 100-2h-3zm-3 4a1 1 0 100 2h.01a1 1 0 100-2H7zm3 0a1 1 0 100 2h3a1 1 0 100-2h-3z" clip-rule="evenodd" /></svg>' },
+                        { title: "Comer Fuera con Inteligencia", text: "Decidir antes de llegar al restaurante, priorizar opciones al horno/parrilla/vapor, y controlar porciones y salsas.", icon: '<svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" viewBox="0 0 20 20" fill="currentColor"><path d="M2 6a2 2 0 012-2h12a2 2 0 012 2v2a2 2 0 100 4v2a2 2 0 01-2 2H4a2 2 0 01-2-2v-2a2 2 0 100-4V6z" /></svg>' },
+                        { title: "Ejercicio Físico Regular", text: "Componente esencial. Ayuda a controlar glucosa, mejora sensibilidad a la insulina y bienestar general.", icon: '<svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z" clip-rule="evenodd" /></svg>' },
+                        { title: "Cautela con Tratamientos No Probados", text: "Priorizar enfoque científico y consultar profesionales antes de iniciar tratamientos nuevos.", icon: '<svg xmlns="http://www.w3.org/2000/svg" class="h-7 w-7" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M18 10a8 8 0 11-16 0 8 8 0 0116 0zm-7 4a1 1 0 11-2 0 1 1 0 012 0zm-1-9a1 1 0 00-1 1v4a1 1 0 102 0V6a1 1 0 00-1-1z" clip-rule="evenodd" /></svg>' }
+                    ].map(tip => `
                     <div class="flex items-start">
-                        <div class="luxury-accent-bg text-white rounded-full p-3 mr-4 flex-shrink-0">
-                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"></path></svg>
+                        <div class="fun-accent-bg text-white rounded-full p-3 mr-5 flex-shrink-0 shadow-md">
+                            ${tip.icon}
                         </div>
                         <div>
-                            <h4 class="font-semibold text-xl text-teal-700">Planificación de Comidas</h4>
-                            <p class="luxury-text">Elaborar menús semanales y listas de compras detalladas asegura una ingesta equilibrada y evita decisiones impulsivas.</p>
+                            <h4 class="font-semibold text-xl text-teal-700 font-poppins">${tip.title}</h4>
+                            <p class="luxury-text leading-relaxed">${tip.text}</p>
                         </div>
                     </div>
-                    <div class="flex items-start">
-                         <div class="luxury-accent-bg text-white rounded-full p-3 mr-4 flex-shrink-0">
-                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"></path></svg>
-                        </div>
-                        <div>
-                            <h4 class="font-semibold text-xl text-teal-700">Comer Fuera con Inteligencia</h4>
-                            <p class="luxury-text">Decidir antes de llegar al restaurante, priorizar opciones al horno/parrilla/vapor, y controlar porciones y salsas.</p>
-                        </div>
-                    </div>
-                    <div class="flex items-start">
-                         <div class="luxury-accent-bg text-white rounded-full p-3 mr-4 flex-shrink-0">
-                           <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
-                        </div>
-                        <div>
-                            <h4 class="font-semibold text-xl text-teal-700">Ejercicio Físico Regular</h4>
-                            <p class="luxury-text">Componente esencial. Ayuda a controlar glucosa, mejora sensibilidad a la insulina y bienestar general.</p>
-                        </div>
-                    </div>
-                     <div class="flex items-start">
-                         <div class="luxury-accent-bg text-white rounded-full p-3 mr-4 flex-shrink-0">
-                            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
-                        </div>
-                        <div>
-                            <h4 class="font-semibold text-xl text-teal-700">Cautela con Tratamientos No Probados</h4>
-                            <p class="luxury-text">Priorizar enfoque científico y consultar profesionales antes de iniciar tratamientos nuevos.</p>
-                        </div>
-                    </div>
+                    `).join('')}
                 </div>
             </div>
         </div>
@@ -646,18 +693,23 @@
 
     <section id="consult-professional" class="py-20 luxury-gradient text-white searchable-content">
         <div class="container mx-auto px-6 text-center">
-            <img src="https://placehold.co/150x150/FFFFFF/006978?text=Icono+Estetoscopio+y+Corazón" alt="[Icono de estetoscopio y corazón representando al profesional de la salud]" class="mx-auto mb-6 rounded-full border-4 border-amber-400 p-2" onerror="this.onerror=null;this.src='https://placehold.co/150x150/cccccc/969696?text=Imagen+no+disponible';">
-            <h2 class="text-4xl font-bold mb-6">Tu Salud, Tu Equipo: La Importancia de la Guía Profesional</h2>
-            <p class="text-xl mb-8 max-w-3xl mx-auto">La información aquí es general. Es crucial trabajar con médicos, dietistas o educadores en diabetes para un plan personalizado.</p>
-            <p class="text-lg mb-10 max-w-3xl mx-auto">Las elecciones dietéticas informadas y el seguimiento médico son clave para el control efectivo de la diabetes y la prevención de complicaciones.</p>
-            <a href="#" class="btn btn-primary text-lg border-2 border-amber-300 hover:bg-amber-400">Encontrar un Profesional (Simulado)</a>
+            <img src="https://placehold.co/150x150/FFFFFF/007991?text=Profesional+Salud" alt="[Icono de estetoscopio y corazón representando al profesional de la salud]" class="mx-auto mb-8 rounded-full border-4 border-amber-400 p-2 shadow-lg" onerror="this.onerror=null;this.src='https://placehold.co/150x150/cccccc/969696?text=Imagen+no+disponible';">
+            <h2 class="text-4xl font-bold mb-6 font-poppins">Tu Salud, Tu Equipo: <span class="text-amber-400">Guía Profesional</span></h2>
+            <p class="text-xl mb-8 max-w-3xl mx-auto text-gray-200 leading-relaxed">La información aquí es general y educativa. Es crucial trabajar con médicos, dietistas o educadores en diabetes para un plan de manejo personalizado y seguro.</p>
+            <p class="text-lg mb-10 max-w-3xl mx-auto text-gray-300">Las elecciones informadas y el seguimiento médico son clave para el control efectivo de la diabetes y la prevención de complicaciones a largo plazo.</p>
+            <button id="simulatedProfButton" class="btn btn-primary text-lg border-2 border-amber-300 hover:bg-amber-400 active:bg-amber-500">
+                <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 inline-block mr-2" viewBox="0 0 20 20" fill="currentColor">
+                    <path d="M8 9a3 3 0 100-6 3 3 0 000 6zM8 11a6 6 0 016 6H2a6 6 0 016-6zM16 7a1 1 0 10-2 0v1h-1a1 1 0 100 2h1v1a1 1 0 102 0v-1h1a1 1 0 100-2h-1V7z" />
+                </svg>
+                Encontrar un Profesional (Simulado)
+            </button>
         </div>
     </section>
 
-    <footer class="bg-gray-800 text-gray-300 py-10 text-center">
+    <footer class="bg-gray-800 text-gray-400 py-12 text-center">
         <div class="container mx-auto px-6">
-            <p class="mb-2">&copy; 2025 DiabetesInfo. Todos los derechos reservados.</p>
-            <p class="text-sm"><em>Descargo de responsabilidad: Este sitio web proporciona información general. No sustituye el consejo médico profesional.</em></p>
+            <p class="mb-3 font-poppins">&copy; ${new Date().getFullYear()} DiabetesInfo. Todos los derechos reservados.</p>
+            <p class="text-xs leading-relaxed max-w-2xl mx-auto"><em>Descargo de responsabilidad: Este sitio web proporciona información general con fines educativos y no constituye consejo médico. Consulte siempre a un profesional de la salud cualificado para cualquier pregunta o preocupación médica. No ignore ni retrase la búsqueda de consejo médico profesional debido a algo que haya leído en este sitio.</em></p>
         </div>
     </footer>
 
@@ -669,13 +721,15 @@
             if (navToggle && navContent) {
                 navToggle.addEventListener('click', () => {
                     navContent.classList.toggle('hidden');
+                    navToggle.classList.toggle('bg-teal-700'); // Visual feedback for toggle
                 });
             }
 
             document.querySelectorAll('#nav-content a').forEach(link => {
                 link.addEventListener('click', () => {
-                    if (window.innerWidth < 768 && navContent) {
+                    if (window.innerWidth < 768 && navContent && !navContent.classList.contains('hidden')) {
                         navContent.classList.add('hidden');
+                        navToggle.classList.remove('bg-teal-700');
                     }
                 });
             });
@@ -685,23 +739,38 @@
             accordionItems.forEach(item => {
                 const header = item.querySelector('.accordion-header');
                 const content = item.querySelector('.accordion-content');
-                const icon = item.querySelector('.accordion-icon');
+                const iconSvg = item.querySelector('.accordion-icon svg');
 
-                if (header && content && icon) {
+                if (header && content && iconSvg) {
                     header.addEventListener('click', () => {
+                        const isExpanded = header.getAttribute('aria-expanded') === 'true';
+                        
+                        // Close other accordions in the same group
                         const parentAccordion = item.closest('#accordion-diet-principles');
                         if (parentAccordion) {
                             parentAccordion.querySelectorAll('.accordion-item').forEach(otherItem => {
-                                const otherContent = otherItem.querySelector('.accordion-content');
-                                const otherIcon = otherItem.querySelector('.accordion-icon');
-                                if (otherContent !== content && !otherContent.classList.contains('hidden')) {
-                                    otherContent.classList.add('hidden');
-                                    if (otherIcon) otherIcon.textContent = '+';
+                                if (otherItem !== item) {
+                                    const otherHeader = otherItem.querySelector('.accordion-header');
+                                    const otherContent = otherItem.querySelector('.accordion-content');
+                                    const otherIconSvg = otherItem.querySelector('.accordion-icon svg');
+                                    if (otherContent && !otherContent.classList.contains('hidden')) {
+                                        otherContent.classList.add('hidden');
+                                        otherHeader.setAttribute('aria-expanded', 'false');
+                                        if (otherIconSvg) otherIconSvg.classList.remove('rotate-180');
+                                    }
                                 }
                             });
                         }
+                        
+                        header.setAttribute('aria-expanded', !isExpanded);
                         content.classList.toggle('hidden');
-                        icon.textContent = content.classList.contains('hidden') ? '+' : '-';
+                        iconSvg.classList.toggle('rotate-180', !isExpanded);
+                    });
+                     header.addEventListener('keydown', (event) => {
+                        if (event.key === 'Enter' || event.key === ' ') {
+                            header.click();
+                            event.preventDefault();
+                        }
                     });
                 }
             });
@@ -714,12 +783,12 @@
                 tabButtons.forEach(button => {
                     button.addEventListener('click', () => {
                         tabButtons.forEach(btn => {
-                            btn.classList.remove('active', 'btn-primary');
-                            btn.classList.add('btn-secondary');
+                            btn.classList.remove('active', 'bg-lime-500', 'text-white', 'shadow-lg', 'scale-105');
+                            btn.classList.add('btn-secondary'); // Re-apply non-active style
                         });
                         tabContents.forEach(content => content.classList.add('hidden'));
 
-                        button.classList.add('active', 'btn-primary');
+                        button.classList.add('active', 'bg-lime-500', 'text-white', 'shadow-lg', 'scale-105');
                         button.classList.remove('btn-secondary');
                         const targetTab = document.getElementById(button.dataset.tab);
                         if (targetTab) {
@@ -733,12 +802,19 @@
             // --- Funcionalidad de Modals para Recetas ---
             const openModalButtons = document.querySelectorAll('.openModalBtn');
             const closeModalButtons = document.querySelectorAll('.closeModalBtn');
+            let lastFocusedElement = null; // To store the element that opened the modal
 
             function openModal(modalId) {
                 const modal = document.getElementById(modalId);
                 if (modal) {
+                    lastFocusedElement = document.activeElement; // Save focus
                     modal.classList.add('active');
-                    document.body.style.overflow = 'hidden'; // Prevent background scroll
+                    document.body.style.overflow = 'hidden';
+                    // Focus the first focusable element in the modal, e.g., the close button
+                    const focusableInModal = modal.querySelector('button, [href], input, select, textarea, [tabindex]:not([tabindex="-1"])');
+                    if (focusableInModal) {
+                        focusableInModal.focus();
+                    }
                 }
             }
 
@@ -746,12 +822,16 @@
                 const modal = document.getElementById(modalId);
                 if (modal) {
                     modal.classList.remove('active');
-                    document.body.style.overflow = ''; // Restore background scroll
+                    document.body.style.overflow = '';
+                    if (lastFocusedElement) {
+                        lastFocusedElement.focus(); // Restore focus
+                    }
                 }
             }
 
             openModalButtons.forEach(button => {
-                button.addEventListener('click', () => {
+                button.addEventListener('click', (e) => {
+                    e.preventDefault(); // Prevent default anchor behavior
                     const modalId = button.dataset.modalTarget;
                     openModal(modalId);
                 });
@@ -764,16 +844,14 @@
                 });
             });
 
-            // Close modal if backdrop is clicked
             document.querySelectorAll('.modal').forEach(modal => {
                 modal.addEventListener('click', (event) => {
-                    if (event.target === modal) { // Clicked on the modal backdrop itself
+                    if (event.target === modal) {
                         closeModal(modal.id);
                     }
                 });
             });
             
-            // Close modal with Escape key
             document.addEventListener('keydown', (event) => {
                 if (event.key === 'Escape') {
                     document.querySelectorAll('.modal.active').forEach(activeModal => {
@@ -781,7 +859,6 @@
                     });
                 }
             });
-
 
             // --- Funcionalidad de Búsqueda ---
             const searchInput = document.getElementById('search-input');
@@ -800,9 +877,15 @@
                 const searchTerm = searchInput.value.trim().toLowerCase();
                 let matchCount = 0;
 
+                // Restore original content and re-attach modal/accordion listeners if needed
+                // For simplicity, we're relying on the DOMContentLoaded listeners to re-attach if elements are re-created
+                // A more complex solution would involve re-attaching listeners specifically after restoring innerHTML
                 originalContents.forEach((html, area) => {
                     area.innerHTML = html;
                 });
+                 // Re-initialize interactive components that might have lost listeners
+                reinitializeInteractiveComponents();
+
 
                 if (searchTerm === "") {
                     searchResultsSummary.textContent = "";
@@ -846,7 +929,6 @@
 
                 if (matchCount > 0) {
                     searchResultsSummary.textContent = `Se encontraron ${matchCount} coincidencias para "${searchInput.value.trim()}".`;
-                     // Scroll to the first match if any
                     const firstHighlight = document.querySelector('.highlight');
                     if (firstHighlight) {
                         firstHighlight.scrollIntoView({ behavior: 'smooth', block: 'center' });
@@ -862,18 +944,54 @@
                     area.innerHTML = html;
                 });
                 searchResultsSummary.textContent = "";
+                reinitializeInteractiveComponents(); // Re-initialize after clearing
             }
+            
+            // Helper function to re-attach listeners (simplified)
+            // In a real app, this would be more robust or use event delegation
+            function reinitializeInteractiveComponents() {
+                // Re-attach modal listeners (example for one type of button)
+                document.querySelectorAll('.openModalBtn').forEach(button => {
+                    button.removeEventListener('click', openModalHandler); // Remove old if any
+                    button.addEventListener('click', openModalHandler);
+                });
+                // Add similar re-initialization for accordions, tabs if they break after search
+            }
+            function openModalHandler(e) {
+                e.preventDefault();
+                const modalId = this.dataset.modalTarget; // 'this' refers to the button
+                openModal(modalId);
+            }
+            // Initial call to attach listeners
+            reinitializeInteractiveComponents();
+
 
             if (searchButton && searchInput) {
                 searchButton.addEventListener('click', performSearch);
                 searchInput.addEventListener('keypress', (event) => {
                     if (event.key === 'Enter') {
                         performSearch();
+                        event.preventDefault(); // Prevent form submission if inside a form
                     }
                 });
             }
             if (clearSearchButton) {
                 clearSearchButton.addEventListener('click', clearSearch);
+            }
+
+            // Simulated Professional Button Click
+            const simulatedProfButton = document.getElementById('simulatedProfButton');
+            if (simulatedProfButton) {
+                simulatedProfButton.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    // Visual feedback
+                    simulatedProfButton.classList.add('scale-95');
+                    setTimeout(() => {
+                        simulatedProfButton.classList.remove('scale-95');
+                    }, 150);
+                    // Optional: Show a message
+                    alert("Esta función para encontrar un profesional es simulada y no está activa en esta demostración.");
+                });
             }
 
         });
