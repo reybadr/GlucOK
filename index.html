@@ -1,0 +1,727 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Plataforma de Aprendizaje de Programación</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+    <style>
+        /* Estilos personalizados adicionales */
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f1f5f9; /* bg-slate-100 */
+            color: #1e293b; /* text-slate-800 */
+        }
+        .modal {
+            display: none; 
+            position: fixed;
+            z-index: 1000;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            overflow: auto;
+            background-color: rgba(0,0,0,0.5);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        .modal-content {
+            background-color: #ffffff; /* bg-white */
+            margin: auto;
+            padding: 25px;
+            border: 1px solid #e2e8f0; /* border-slate-300 */
+            width: 90%;
+            max-width: 500px;
+            border-radius: 0.75rem;
+            box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+        }
+        .close-button {
+            color: #94a3b8; /* text-slate-400 */
+            float: right;
+            font-size: 28px;
+            font-weight: bold;
+            transition: color 0.2s ease-in-out;
+        }
+        .close-button:hover,
+        .close-button:focus {
+            color: #0f172a; /* text-slate-900 */
+            text-decoration: none;
+            cursor: pointer;
+        }
+        html, body {
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+        }
+        main {
+            flex-grow: 1;
+        }
+        input[type="text"], input[type="email"], input[type="password"], textarea {
+            transition: border-color 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+        }
+        input[type="text"]:focus, input[type="email"]:focus, input[type="password"]:focus, textarea:focus {
+            border-color: #7c3aed; /* purple-600 */
+            box-shadow: 0 0 0 2px rgba(124, 58, 237, 0.3); 
+        }
+        /* Tailwind Typography prose color update */
+        .prose-purple a { color: #7c3aed; } /* purple-600 */
+        .prose-purple a:hover { color: #6d28d9; } /* purple-700 */
+        .prose-purple strong { color: #3730a3; } /* purple-800 */
+        /* Add more prose overrides if needed */
+
+    </style>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body class="bg-slate-100 text-slate-800">
+
+    <header class="bg-white shadow-sm sticky top-0 z-50 border-b border-slate-200">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#" class="text-2xl font-bold text-purple-600 nav-link" data-target="inicio">Prográmate</a>
+            <div class="hidden md:flex space-x-2">
+                <a href="#" class="text-slate-700 hover:text-purple-600 px-4 py-2 rounded-lg hover:bg-purple-50 transition-colors duration-200 nav-link" data-target="inicio">Inicio</a>
+                <a href="#" class="text-slate-700 hover:text-purple-600 px-4 py-2 rounded-lg hover:bg-purple-50 transition-colors duration-200 nav-link" data-target="cursos">Cursos</a>
+                <a href="#" class="text-slate-700 hover:text-purple-600 px-4 py-2 rounded-lg hover:bg-purple-50 transition-colors duration-200 nav-link hidden" data-target="mi-progreso" id="nav-progreso">Mi Progreso</a>
+                <a href="#" class="text-slate-700 hover:text-purple-600 px-4 py-2 rounded-lg hover:bg-purple-50 transition-colors duration-200 nav-link" data-target="recursos">Recursos</a>
+            </div>
+            <div class="hidden md:flex items-center space-x-3">
+                <button id="btn-login-nav" class="bg-purple-600 text-white px-5 py-2 rounded-lg hover:bg-purple-700 transition-colors duration-200 text-sm font-medium">Iniciar Sesión</button>
+                <button id="btn-registro-nav" class="bg-blue-500 text-white px-5 py-2 rounded-lg hover:bg-blue-600 transition-colors duration-200 text-sm font-medium">Registrarse</button>
+                <div id="user-greeting" class="hidden items-center">
+                    <span id="user-name-display" class="mr-3 text-slate-700 text-sm"></span>
+                    <button id="btn-logout" class="text-sm text-red-600 hover:text-red-700 hover:underline">Cerrar Sesión</button>
+                </div>
+            </div>
+            <div class="md:hidden flex items-center">
+                <button id="mobile-menu-button" class="text-slate-600 hover:text-purple-600 focus:outline-none p-2">
+                    <i class="fas fa-bars fa-lg"></i>
+                </button>
+            </div>
+        </nav>
+        <div id="mobile-menu" class="md:hidden hidden bg-white shadow-lg border-t border-slate-200">
+            <a href="#" class="block text-slate-700 hover:bg-purple-50 hover:text-purple-600 px-4 py-3 nav-link" data-target="inicio">Inicio</a>
+            <a href="#" class="block text-slate-700 hover:bg-purple-50 hover:text-purple-600 px-4 py-3 nav-link" data-target="cursos">Cursos</a>
+            <a href="#" class="block text-slate-700 hover:bg-purple-50 hover:text-purple-600 px-4 py-3 nav-link hidden" data-target="mi-progreso" id="nav-progreso-mobile">Mi Progreso</a>
+            <a href="#" class="block text-slate-700 hover:bg-purple-50 hover:text-purple-600 px-4 py-3 nav-link" data-target="recursos">Recursos</a>
+            <div class="px-4 py-3 border-t border-slate-200">
+                <button id="btn-login-nav-mobile" class="w-full bg-purple-600 text-white px-4 py-2.5 rounded-lg hover:bg-purple-700 mb-2 text-sm font-medium">Iniciar Sesión</button>
+                <button id="btn-registro-nav-mobile" class="w-full bg-blue-500 text-white px-4 py-2.5 rounded-lg hover:bg-blue-600 text-sm font-medium">Registrarse</button>
+                 <div id="user-greeting-mobile" class="hidden items-center flex-col mt-3">
+                    <span id="user-name-display-mobile" class="mb-2 text-slate-700 text-sm"></span>
+                    <button id="btn-logout-mobile" class="w-full text-sm text-red-600 hover:text-red-700 underline bg-slate-100 py-2 rounded-lg">Cerrar Sesión</button>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main class="container mx-auto px-4 sm:px-6 py-10 flex-grow">
+        <section id="inicio" class="page-section">
+            <div class="bg-white p-8 sm:p-12 rounded-xl shadow-lg text-center">
+                <h1 class="text-4xl sm:text-5xl font-bold text-purple-700 mb-6">Bienvenido a Prográmate</h1>
+                <p class="text-lg text-slate-600 mb-10 max-w-2xl mx-auto">Tu aventura en el mundo de la programación comienza aquí. Aprende a tu propio ritmo con nuestros cursos interactivos y visuales.</p>
+                <img src="https://placehold.co/800x400/7c3aed/ffffff?text=🚀+Inicia+Tu+Aventura+en+el+Código+🚀" alt="[Image of Banner de aprendizaje de programación con cohetes y estrellas, en tonos púrpura]" class="w-full max-w-3xl mx-auto rounded-xl shadow-md mb-10" onerror="this.src='https://placehold.co/800x400/cccccc/1f2937?text=Imagen+Principal'; this.alt='Imagen de marcador de posición alternativa para el banner principal'">
+                <button class="bg-blue-500 text-white px-10 py-3.5 rounded-full font-semibold text-lg hover:bg-blue-600 transition duration-300 transform hover:scale-105 nav-link" data-target="cursos">Explorar Cursos</button>
+                <div id="continue-learning-banner" class="mt-12 p-6 bg-purple-50 rounded-xl shadow-sm hidden border border-purple-200">
+                    <h2 class="text-2xl font-semibold text-purple-700 mb-3">¡Bienvenido de nuevo!</h2>
+                    <p class="text-slate-700 mb-4">Continúa donde lo dejaste y sigue avanzando en tu aprendizaje.</p>
+                    <button id="btn-continue-learning" class="bg-purple-600 text-white px-6 py-2.5 rounded-lg hover:bg-purple-700 font-medium">Continuar Aprendiendo</button>
+                </div>
+            </div>
+        </section>
+
+        <section id="cursos" class="page-section hidden">
+            <h2 class="text-3xl sm:text-4xl font-bold mb-12 text-center text-purple-700">Nuestros Cursos</h2>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 border border-slate-200 flex flex-col">
+                    <img src="https://placehold.co/600x400/a78bfa/ffffff?text=Módulo+1:+Fundamentos" alt="[Image of Icono representativo del curso de Introducción a la Programación, en tonos púrpura claro]" class="w-full h-48 object-cover rounded-lg mb-5" onerror="this.src='https://placehold.co/600x400/cccccc/1f2937?text=Curso+1'; this.alt='Imagen de marcador de posición alternativa para curso 1'">
+                    <h3 class="text-xl font-semibold mb-2 text-purple-600">Introducción a la Programación</h3>
+                    <p class="text-slate-600 mb-4 text-sm flex-grow">Aprende los conceptos básicos y fundamentales para empezar a programar desde cero.</p>
+                    <div class="mb-4">
+                        <span class="text-xs font-semibold inline-block py-1 px-3 uppercase rounded-full text-purple-700 bg-purple-100">
+                            Principiante
+                        </span>
+                    </div>
+                    <button class="w-full bg-purple-600 text-white px-4 py-2.5 rounded-lg hover:bg-purple-700 transition-colors duration-200 font-medium view-lesson-btn" data-course-id="intro-programacion" data-lesson-id="variables">Comenzar Curso</button>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 border border-slate-200 flex flex-col">
+                    <img src="https://placehold.co/600x400/93c5fd/1e293b?text=Módulo+2:+Datos" alt="[Image of Icono representativo del curso de Variables y Tipos de Datos, en tonos azul claro]" class="w-full h-48 object-cover rounded-lg mb-5" onerror="this.src='https://placehold.co/600x400/cccccc/1f2937?text=Curso+2'; this.alt='Imagen de marcador de posición alternativa para curso 2'">
+                    <h3 class="text-xl font-semibold mb-2 text-purple-600">Variables y Tipos de Datos</h3>
+                    <p class="text-slate-600 mb-4 text-sm flex-grow">Entiende cómo almacenar y manipular información esencial en tus programas.</p>
+                     <div class="mb-4">
+                        <span class="text-xs font-semibold inline-block py-1 px-3 uppercase rounded-full text-blue-700 bg-blue-100">
+                            Principiante
+                        </span>
+                    </div>
+                    <button class="w-full bg-slate-300 text-slate-500 px-4 py-2.5 rounded-lg cursor-not-allowed flex items-center justify-center font-medium" disabled title="Requiere iniciar sesión o completar el módulo anterior"><i class="fas fa-lock mr-2 opacity-75"></i>Bloqueado</button>
+                </div>
+                <div class="bg-white p-6 rounded-xl shadow-md hover:shadow-lg transition-all duration-300 border border-slate-200 flex flex-col">
+                     <img src="https://placehold.co/600x400/60a5fa/ffffff?text=Módulo+3:+Lógica" alt="[Image of Icono representativo del curso de Estructuras de Control, en tonos azul medio]" class="w-full h-48 object-cover rounded-lg mb-5" onerror="this.src='https://placehold.co/600x400/cccccc/1f2937?text=Curso+3'; this.alt='Imagen de marcador de posición alternativa para curso 3'">
+                    <h3 class="text-xl font-semibold mb-2 text-purple-600">Estructuras de Control</h3>
+                    <p class="text-slate-600 mb-4 text-sm flex-grow">Aprende a tomar decisiones y repetir tareas con condicionales y bucles.</p>
+                     <div class="mb-4">
+                        <span class="text-xs font-semibold inline-block py-1 px-3 uppercase rounded-full text-blue-700 bg-blue-100">
+                            Intermedio
+                        </span>
+                    </div>
+                    <button class="w-full bg-slate-300 text-slate-500 px-4 py-2.5 rounded-lg cursor-not-allowed flex items-center justify-center font-medium" disabled title="Requiere iniciar sesión o completar el módulo anterior"><i class="fas fa-lock mr-2 opacity-75"></i>Bloqueado</button>
+                </div>
+            </div>
+        </section>
+
+        <section id="leccion-detalle" class="page-section hidden">
+            <button class="mb-8 bg-slate-200 text-slate-700 px-5 py-2 rounded-lg hover:bg-slate-300 transition-colors duration-200 nav-link text-sm font-medium" data-target="cursos"><i class="fas fa-arrow-left mr-2"></i> Volver a Cursos</button>
+            <div class="bg-white p-8 sm:p-10 rounded-xl shadow-lg">
+                <h2 id="lesson-title" class="text-3xl sm:text-4xl font-bold mb-2 text-purple-700">Título de la Lección</h2>
+                <p class="text-sm text-slate-500 mb-8" id="lesson-module">Módulo: Introducción a la Programación</p>
+
+                <div class="mb-10 aspect-w-16 aspect-h-9 bg-slate-900 rounded-lg shadow-md overflow-hidden">
+                    <iframe id="lesson-video" class="w-full h-full" src="https://www.youtube.com/embed/L_LUpnjgPso" title="Video explicativo de la lección de programación" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+                </div>
+
+                <article id="lesson-content" class="prose prose-purple max-w-none lg:prose-lg text-slate-700">
+                    <p>Aquí iría la explicación detallada de la lección, con ejemplos de código y conceptos clave.</p>
+                    <p>Por ejemplo, podríamos hablar sobre qué es una variable:</p>
+                    <pre class="bg-slate-800 text-white p-4 rounded-md"><code class="language-python">nombre_variable = "Hola Mundo"
+print(nombre_variable)</code></pre>
+                    <p>Las variables son contenedores para almacenar valores de datos. Piensa en ellas como etiquetas que pones a cajas donde guardas diferentes tipos de información.</p>
+                </article>
+
+                <div class="mt-12 pt-8 border-t border-slate-200">
+                    <h3 class="text-2xl font-semibold mb-5 text-purple-600">Ejercicio Práctico</h3>
+                    <p class="mb-5 text-slate-600">Crea una variable llamada `edad` y asígnale tu edad. Luego, imprímela en la consola.</p>
+                    <div id="code-exercise-area" class="mb-5">
+                        <textarea id="user-code-input" class="w-full p-4 border border-slate-300 rounded-lg h-40 font-mono text-sm bg-slate-50 focus:ring-2 focus:ring-purple-400 text-slate-800" placeholder="Escribe tu código aquí..."></textarea>
+                    </div>
+                    <div class="flex space-x-3">
+                        <button id="run-code-btn" class="bg-green-500 text-white px-7 py-2.5 rounded-lg hover:bg-green-600 transition-colors duration-200 font-medium"><i class="fas fa-play mr-2"></i>Ejecutar</button>
+                        <button id="reset-code-btn" class="bg-yellow-500 text-white px-7 py-2.5 rounded-lg hover:bg-yellow-600 transition-colors duration-200 font-medium"><i class="fas fa-undo mr-2"></i>Reiniciar</button>
+                    </div>
+                    <div id="exercise-feedback" class="mt-5 p-4 rounded-lg text-sm hidden"></div>
+                </div>
+
+                <div class="mt-10 flex flex-col sm:flex-row justify-between space-y-3 sm:space-y-0 sm:space-x-3">
+                    <button id="prev-lesson-btn" class="w-full sm:w-auto bg-slate-500 text-white px-6 py-2.5 rounded-lg hover:bg-slate-600 disabled:opacity-60 disabled:cursor-not-allowed transition-colors duration-200 font-medium flex items-center justify-center" disabled><i class="fas fa-chevron-left mr-2"></i>Lección Anterior</button>
+                    <button id="next-lesson-btn" class="w-full sm:w-auto bg-purple-600 text-white px-6 py-2.5 rounded-lg hover:bg-purple-700 transition-colors duration-200 font-medium flex items-center justify-center">Siguiente Lección<i class="fas fa-chevron-right ml-2"></i></button>
+                </div>
+            </div>
+        </section>
+
+        <section id="mi-progreso" class="page-section hidden">
+            <div class="bg-white p-8 sm:p-10 rounded-xl shadow-lg">
+                <h2 class="text-3xl sm:text-4xl font-bold mb-10 text-center text-purple-700">Mi Progreso</h2>
+                <div id="user-profile-summary" class="mb-10 p-6 bg-purple-50 rounded-xl border border-purple-200">
+                    <h3 class="text-xl font-semibold text-purple-700" id="progreso-username">Nombre de Usuario</h3>
+                    <p class="text-slate-600 text-sm" id="progreso-email">correo@ejemplo.com</p>
+                    <p class="text-slate-600 mt-3">Cursos Completados: <span id="progreso-cursos-completados" class="font-bold text-purple-600">0</span></p>
+                </div>
+
+                <h3 class="text-2xl font-semibold mb-6 text-purple-600">Progreso en Cursos</h3>
+                <div class="mb-8 p-5 border border-slate-200 rounded-xl bg-white">
+                    <h4 class="text-lg font-semibold text-slate-800">Introducción a la Programación</h4>
+                    <div class="w-full bg-slate-200 rounded-full h-5 my-3 overflow-hidden">
+                        <div id="progress-bar-intro" class="bg-green-500 h-full rounded-full text-xs font-medium text-white text-center p-0.5 leading-tight" style="width: 25%">25%</div>
+                    </div>
+                    <ul class="mt-4 space-y-1.5 text-sm text-slate-600">
+                        <li class="flex items-center text-green-600"><i class="fas fa-check-circle mr-2.5 text-green-500"></i> Lección 1: ¿Qué es programar?</li>
+                        <li class="flex items-center text-green-600"><i class="fas fa-check-circle mr-2.5 text-green-500"></i> Lección 2: Tu primer "Hola Mundo".</li>
+                        <li class="flex items-center"><i class="far fa-circle mr-2.5 text-slate-400"></i> Lección 3: Variables y Tipos de Datos (Pendiente).</li>
+                        <li class="flex items-center"><i class="far fa-circle mr-2.5 text-slate-400"></i> Lección 4: Operadores Básicos (Pendiente).</li>
+                    </ul>
+                    <button class="mt-5 bg-purple-500 text-white px-5 py-2 rounded-lg text-sm hover:bg-purple-600 transition-colors duration-200 font-medium view-lesson-btn" data-course-id="intro-programacion" data-lesson-id="variables">Continuar Curso</button>
+                </div>
+            </div>
+        </section>
+
+        <section id="recursos" class="page-section hidden">
+            <div class="bg-white p-8 sm:p-10 rounded-xl shadow-lg">
+                <h2 class="text-3xl sm:text-4xl font-bold mb-10 text-center text-purple-700">Recursos Adicionales</h2>
+                <ul class="space-y-5">
+                    <li class="p-5 bg-purple-50 rounded-xl hover:bg-purple-100 transition-colors duration-200 border border-purple-200">
+                        <a href="#" target="_blank" rel="noopener noreferrer" class="font-semibold text-purple-700 hover:underline text-lg">Documentación Oficial de Python</a>
+                        <p class="text-sm text-slate-600 mt-1">La fuente principal para aprender Python, con guías y tutoriales detallados.</p>
+                    </li>
+                    <li class="p-5 bg-blue-50 rounded-xl hover:bg-blue-100 transition-colors duration-200 border border-blue-200">
+                        <a href="#" target="_blank" rel="noopener noreferrer" class="font-semibold text-blue-700 hover:underline text-lg">MDN Web Docs (JavaScript)</a>
+                        <p class="text-sm text-slate-600 mt-1">Excelente recurso para desarrolladores web que cubre HTML, CSS y JavaScript.</p>
+                    </li>
+                    <li class="p-5 bg-slate-100 rounded-xl hover:bg-slate-200 transition-colors duration-200 border border-slate-300">
+                        <a href="#" target="_blank" rel="noopener noreferrer" class="font-semibold text-slate-700 hover:underline text-lg">Stack Overflow</a>
+                        <p class="text-sm text-slate-600 mt-1">Comunidad global para hacer preguntas y encontrar respuestas sobre programación.</p>
+                    </li>
+                </ul>
+            </div>
+        </section>
+    </main>
+
+    <footer class="bg-slate-900 text-slate-300 text-center p-8 mt-auto">
+        <p>© <span id="currentYear"></span> Prográmate. Todos los derechos reservados.</p>
+        <p class="text-xs mt-1">Una plataforma diseñada para inspirar a la próxima generación de desarrolladores.</p>
+    </footer>
+
+    <div id="modal-registro" class="modal">
+        <div class="modal-content">
+            <span class="close-button" data-modal-id="modal-registro">×</span>
+            <h3 class="text-2xl font-semibold mb-6 text-center text-purple-700">Crear Cuenta Nueva</h3>
+            <form id="form-registro">
+                <div class="mb-4">
+                    <label for="reg-username" class="block text-sm font-medium text-slate-700 mb-1">Nombre de Usuario</label>
+                    <input type="text" id="reg-username" name="username" class="mt-1 block w-full px-3.5 py-2.5 border border-slate-300 rounded-lg shadow-sm focus:outline-none sm:text-sm" required>
+                </div>
+                <div class="mb-4">
+                    <label for="reg-email" class="block text-sm font-medium text-slate-700 mb-1">Correo Electrónico</label>
+                    <input type="email" id="reg-email" name="email" class="mt-1 block w-full px-3.5 py-2.5 border border-slate-300 rounded-lg shadow-sm focus:outline-none sm:text-sm" required>
+                </div>
+                <div class="mb-6">
+                    <label for="reg-password" class="block text-sm font-medium text-slate-700 mb-1">Contraseña</label>
+                    <input type="password" id="reg-password" name="password" class="mt-1 block w-full px-3.5 py-2.5 border border-slate-300 rounded-lg shadow-sm focus:outline-none sm:text-sm" required>
+                    <p id="reg-error" class="text-red-500 text-xs mt-1.5 hidden"></p>
+                </div>
+                <button type="submit" class="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2.5 px-4 rounded-lg focus:outline-none focus:shadow-outline transition-colors duration-200">Registrarse</button>
+                <p class="text-sm text-center mt-5 text-slate-600">¿Ya tienes cuenta? <a href="#" id="link-to-login" class="text-purple-600 hover:underline font-medium">Inicia Sesión</a></p>
+            </form>
+        </div>
+    </div>
+
+    <div id="modal-login" class="modal">
+        <div class="modal-content">
+            <span class="close-button" data-modal-id="modal-login">×</span>
+            <h3 class="text-2xl font-semibold mb-6 text-center text-purple-700">Iniciar Sesión</h3>
+            <form id="form-login">
+                <div class="mb-4">
+                    <label for="login-email" class="block text-sm font-medium text-slate-700 mb-1">Correo Electrónico</label>
+                    <input type="email" id="login-email" name="email" class="mt-1 block w-full px-3.5 py-2.5 border border-slate-300 rounded-lg shadow-sm focus:outline-none sm:text-sm" required>
+                </div>
+                <div class="mb-6">
+                    <label for="login-password" class="block text-sm font-medium text-slate-700 mb-1">Contraseña</label>
+                    <input type="password" id="login-password" name="password" class="mt-1 block w-full px-3.5 py-2.5 border border-slate-300 rounded-lg shadow-sm focus:outline-none sm:text-sm" required>
+                     <p id="login-error" class="text-red-500 text-xs mt-1.5 hidden"></p>
+                </div>
+                <button type="submit" class="w-full bg-purple-600 hover:bg-purple-700 text-white font-semibold py-2.5 px-4 rounded-lg focus:outline-none focus:shadow-outline transition-colors duration-200">Entrar</button>
+                 <p class="text-sm text-center mt-5 text-slate-600">¿No tienes cuenta? <a href="#" id="link-to-register" class="text-blue-500 hover:underline font-medium">Regístrate</a></p>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        // Simulación de estado de sesión y datos de usuario/progreso
+        let currentUser = null; 
+        let lastLesson = null; 
+
+        // --- MANEJO DE NAVEGACIÓN Y VISIBILIDAD DE SECCIONES ---
+        const navLinks = document.querySelectorAll('.nav-link');
+        const pageSections = document.querySelectorAll('.page-section');
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        function showSection(targetId) {
+            pageSections.forEach(section => {
+                section.classList.toggle('hidden', section.id !== targetId);
+            });
+            mobileMenu.classList.add('hidden');
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        navLinks.forEach(link => {
+            link.addEventListener('click', (event) => {
+                event.preventDefault();
+                const targetId = link.dataset.target;
+                showSection(targetId);
+                if (targetId === 'cursos' && currentUser) {
+                    unlockCoursesForLoggedInUser(); 
+                    attachViewLessonButtonListeners();
+                }
+            });
+        });
+        
+        mobileMenuButton.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        // --- MANEJO DE MODALES ---
+        const btnLoginNavDesktop = document.getElementById('btn-login-nav');
+        const btnRegistroNavDesktop = document.getElementById('btn-registro-nav');
+        const btnLoginNavMobile = document.getElementById('btn-login-nav-mobile');
+        const btnRegistroNavMobile = document.getElementById('btn-registro-nav-mobile');
+
+        const modalRegistro = document.getElementById('modal-registro');
+        const modalLogin = document.getElementById('modal-login');
+        const closeButtons = document.querySelectorAll('.close-button');
+        const linkToLogin = document.getElementById('link-to-login');
+        const linkToRegister = document.getElementById('link-to-register');
+
+        function openModal(modalElement) {
+            modalElement.style.display = 'flex';
+        }
+
+        function closeModal(modalElement) {
+            modalElement.style.display = 'none';
+        }
+
+        [btnLoginNavDesktop, btnLoginNavMobile].forEach(btn => btn.addEventListener('click', () => openModal(modalLogin)));
+        [btnRegistroNavDesktop, btnRegistroNavMobile].forEach(btn => btn.addEventListener('click', () => openModal(modalRegistro)));
+        
+        closeButtons.forEach(button => {
+            button.addEventListener('click', () => closeModal(document.getElementById(button.dataset.modalId)));
+        });
+
+        linkToLogin.addEventListener('click', (e) => {
+            e.preventDefault();
+            closeModal(modalRegistro);
+            openModal(modalLogin);
+        });
+        linkToRegister.addEventListener('click', (e) => {
+            e.preventDefault();
+            closeModal(modalLogin);
+            openModal(modalRegistro);
+        });
+
+        window.onclick = function(event) {
+            if (event.target == modalLogin) closeModal(modalLogin);
+            if (event.target == modalRegistro) closeModal(modalRegistro);
+        }
+
+        // --- SIMULACIÓN DE AUTENTICACIÓN ---
+        const formRegistro = document.getElementById('form-registro');
+        const formLogin = document.getElementById('form-login');
+        const regError = document.getElementById('reg-error');
+        const loginError = document.getElementById('login-error');
+
+        const navProgresoDesktop = document.getElementById('nav-progreso');
+        const navProgresoMobile = document.getElementById('nav-progreso-mobile');
+        const userGreetingDesktop = document.getElementById('user-greeting');
+        const userGreetingMobile = document.getElementById('user-greeting-mobile');
+        const userNameDisplayDesktop = document.getElementById('user-name-display');
+        const userNameDisplayMobile = document.getElementById('user-name-display-mobile');
+        const btnLogoutDesktop = document.getElementById('btn-logout');
+        const btnLogoutMobile = document.getElementById('btn-logout-mobile');
+        const continueLearningBanner = document.getElementById('continue-learning-banner');
+        const btnContinueLearning = document.getElementById('btn-continue-learning');
+
+        const progresoUsername = document.getElementById('progreso-username');
+        const progresoEmail = document.getElementById('progreso-email');
+        const progresoCursosCompletados = document.getElementById('progreso-cursos-completados');
+        const progressBarIntro = document.getElementById('progress-bar-intro');
+
+        formRegistro.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const username = formRegistro.username.value;
+            const email = formRegistro.email.value;
+
+            if (username.length < 3) {
+                regError.textContent = "El nombre de usuario debe tener al menos 3 caracteres.";
+                regError.classList.remove('hidden');
+                return;
+            }
+            regError.classList.add('hidden');
+            
+            console.log('Usuario registrado (simulado):', { username, email });
+            alert(`¡Registro exitoso para ${username}! Ahora puedes iniciar sesión.`);
+            closeModal(modalRegistro);
+            openModal(modalLogin); 
+            formRegistro.reset();
+        });
+
+        formLogin.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const email = formLogin.email.value;
+            const password = formLogin.password.value;
+
+            if (email === "test@test.com" && password === "test123") {
+                currentUser = { 
+                    username: 'UsuarioPrueba', 
+                    email: 'test@test.com',
+                    progress: {
+                        'intro-programacion': { 
+                            completedLessons: ['que-es-programar', 'hola-mundo'], 
+                            currentLesson: 'variables', 
+                            progressPercent: 50 
+                        }
+                    }
+                };
+                lastLesson = { courseId: 'intro-programacion', lessonId: 'variables' };
+                updateUIAfterLogin();
+                closeModal(modalLogin);
+                formLogin.reset();
+                loginError.classList.add('hidden');
+                showSection('inicio'); 
+            } else {
+                loginError.textContent = "Correo o contraseña incorrectos.";
+                loginError.classList.remove('hidden');
+            }
+        });
+
+        function updateUIAfterLogin() {
+            if (currentUser) {
+                [btnLoginNavDesktop, btnRegistroNavDesktop, btnLoginNavMobile, btnRegistroNavMobile].forEach(btn => btn.classList.add('hidden'));
+                
+                userNameDisplayDesktop.textContent = `Hola, ${currentUser.username}`;
+                userNameDisplayMobile.textContent = `Hola, ${currentUser.username}`;
+                [userGreetingDesktop, userGreetingMobile, navProgresoDesktop, navProgresoMobile].forEach(el => el.classList.remove('hidden'));
+
+                if (lastLesson) {
+                    continueLearningBanner.classList.remove('hidden');
+                }
+                progresoUsername.textContent = currentUser.username;
+                progresoEmail.textContent = currentUser.email;
+                if (currentUser.progress && currentUser.progress['intro-programacion']) {
+                    const introProgress = currentUser.progress['intro-programacion'];
+                    progressBarIntro.style.width = `${introProgress.progressPercent}%`;
+                    progressBarIntro.textContent = `${introProgress.progressPercent}%`;
+                }
+                unlockCoursesForLoggedInUser();
+                attachViewLessonButtonListeners();
+            }
+        }
+        
+        function unlockCoursesForLoggedInUser() {
+            const courseCards = document.querySelectorAll('#cursos .grid > div');
+            courseCards.forEach((card, index) => { // Unlock all courses for logged-in user (simulation)
+                const button = card.querySelector('button.view-lesson-btn') || card.querySelector('button[disabled]');
+                if (button) {
+                    button.innerHTML = 'Comenzar Curso'; 
+                    button.classList.remove('bg-slate-300', 'text-slate-500', 'cursor-not-allowed');
+                    button.classList.add('bg-purple-600', 'text-white', 'hover:bg-purple-700', 'view-lesson-btn');
+                    button.disabled = false;
+                    button.removeAttribute('title');
+                    // Ensure data attributes are set if they were missing on locked buttons
+                    if (!button.dataset.courseId) {
+                        if (index === 0) {
+                             button.dataset.courseId = "intro-programacion";
+                             button.dataset.lessonId = "variables";
+                        } else if (index === 1) {
+                            button.dataset.courseId = "variables-tipos-datos"; 
+                            button.dataset.lessonId = "intro-variables";
+                        } else if (index === 2) {
+                             button.dataset.courseId = "estructuras-control"; 
+                             button.dataset.lessonId = "intro-estructuras";
+                        }
+                    }
+                }
+            });
+        }
+
+        function logout() {
+            currentUser = null;
+            lastLesson = null;
+            localStorage.removeItem('currentUser');
+            localStorage.removeItem('lastLesson');
+
+            [btnLoginNavDesktop, btnRegistroNavDesktop, btnLoginNavMobile, btnRegistroNavMobile].forEach(btn => btn.classList.remove('hidden'));
+            [userGreetingDesktop, userGreetingMobile, navProgresoDesktop, navProgresoMobile, continueLearningBanner].forEach(el => el.classList.add('hidden'));
+            
+            const courseCards = document.querySelectorAll('#cursos .grid > div');
+            courseCards.forEach((card, index) => {
+                const button = card.querySelector('button');
+                if (index > 0) { // Lock all except the first one
+                    button.innerHTML = `<i class="fas fa-lock mr-2 opacity-75"></i>Bloqueado`;
+                    button.classList.add('bg-slate-300', 'text-slate-500', 'cursor-not-allowed');
+                    button.classList.remove('bg-purple-600', 'text-white', 'hover:bg-purple-700', 'view-lesson-btn');
+                    button.disabled = true;
+                    button.title = "Requiere iniciar sesión o completar el módulo anterior";
+                } else { // Ensure first course button is correctly styled as "Comenzar Curso"
+                     button.innerHTML = 'Comenzar Curso';
+                     button.classList.add('bg-purple-600', 'text-white', 'hover:bg-purple-700', 'view-lesson-btn');
+                     button.classList.remove('bg-slate-300', 'text-slate-500', 'cursor-not-allowed');
+                     button.disabled = false;
+                     button.removeAttribute('title');
+                }
+            });
+            attachViewLessonButtonListeners();
+            showSection('inicio');
+            console.log('Usuario cerró sesión');
+        }
+
+        [btnLogoutDesktop, btnLogoutMobile].forEach(btn => btn.addEventListener('click', logout));
+
+        const lessonTitle = document.getElementById('lesson-title');
+        const lessonModule = document.getElementById('lesson-module');
+        const lessonVideo = document.getElementById('lesson-video');
+        const lessonContent = document.getElementById('lesson-content');
+
+        const lessonsData = {
+            'intro-programacion': {
+                'variables': {
+                    title: "Variables y Tipos de Datos (Intro)",
+                    module: "Introducción a la Programación",
+                    videoUrl: "https://www.youtube.com/embed/L_LUpnjgPso", 
+                    content: `<p>En esta lección, aprenderás qué son las variables y los tipos de datos más comunes en programación.</p>
+                              <p>Una variable es como una caja etiquetada donde puedes guardar información. Por ejemplo:</p>
+                              <pre class="bg-slate-800 text-white p-4 rounded-md"><code class="language-python">nombre_alumno = "Carlos" # Esto es una cadena de texto (string)
+edad_alumno = 23     # Esto es un número entero (integer)
+promedio_curso = 8.75 # Esto es un número decimal (float)
+esta_inscrito = True # Esto es un valor booleano (True o False)</code></pre>
+                              <p>Cada tipo de dato tiene un propósito específico. ¡Intenta crear tus propias variables en el ejercicio práctico!</p>`,
+                    prev: null,
+                    next: 'operadores'
+                },
+                'operadores': {
+                    title: "Operadores Básicos",
+                    module: "Introducción a la Programación",
+                    videoUrl: "https://www.youtube.com/embed/L_LUpnjgPso", 
+                    content: `<p>Los operadores te permiten realizar cálculos matemáticos y comparaciones lógicas.</p>
+                              <pre class="bg-slate-800 text-white p-4 rounded-md"><code class="language-python"># Operadores aritméticos
+suma = 10 + 5  # suma es 15
+resta = 10 - 5 # resta es 5
+multiplicacion = 10 * 5 # multiplicacion es 50
+division = 10 / 5   # division es 2.0 (float)
+
+# Operadores de comparación
+es_mayor = 10 > 5 # es_mayor es True
+es_igual = 10 == 10 # es_igual es True</code></pre>
+                              <p>Dominar los operadores es fundamental para escribir programas útiles.</p>`,
+                    prev: 'variables',
+                    next: null 
+                }
+            },
+            'variables-tipos-datos': { 
+                 'intro-variables': {
+                    title: "Profundizando en Variables",
+                    module: "Variables y Tipos de Datos",
+                    videoUrl: "https://www.youtube.com/embed/L_LUpnjgPso",
+                    content: "<p class='text-slate-700'>Exploraremos el alcance de las variables (scope), las constantes y las buenas prácticas para nombrarlas.</p>",
+                    prev: null,
+                    next: null
+                }
+            },
+             'estructuras-control': { 
+                 'intro-estructuras': {
+                    title: "Introducción a las Estructuras de Control",
+                    module: "Estructuras de Control",
+                    videoUrl: "https://www.youtube.com/embed/L_LUpnjgPso",
+                    content: "<p class='text-slate-700'>Aprende sobre sentencias <code>if/else</code> para tomar decisiones y bucles <code>for/while</code> para repetir tareas.</p>",
+                    prev: null,
+                    next: null
+                }
+            }
+        };
+        let currentLessonData = null; // Stores { courseId: '...', lessonId: '...', title: '...', ...}
+
+        function loadLesson(courseId, lessonId) {
+            if (!currentUser) {
+                alert("Por favor, inicia sesión para acceder a las lecciones.");
+                openModal(modalLogin);
+                return;
+            }
+            
+            const lesson = lessonsData[courseId] && lessonsData[courseId][lessonId];
+            if (lesson) {
+                currentLessonData = { ...lesson, courseId: courseId, lessonId: lessonId }; // Store full context
+                lessonTitle.textContent = lesson.title;
+                lessonModule.textContent = `Módulo: ${lesson.module}`;
+                lessonVideo.src = lesson.videoUrl;
+                lessonContent.innerHTML = lesson.content; 
+                
+                document.getElementById('prev-lesson-btn').disabled = !lesson.prev;
+                document.getElementById('next-lesson-btn').disabled = !lesson.next;
+
+                showSection('leccion-detalle');
+                lastLesson = { courseId, lessonId }; 
+                localStorage.setItem('lastLesson', JSON.stringify(lastLesson));
+            } else {
+                console.error('Lección no encontrada:', courseId, lessonId);
+                alert('Lección no encontrada o aún no disponible.');
+            }
+        }
+        
+        function attachViewLessonButtonListeners() {
+            document.querySelectorAll('.view-lesson-btn').forEach(btn => {
+                const newBtn = btn.cloneNode(true);
+                btn.parentNode.replaceChild(newBtn, btn);
+
+                newBtn.addEventListener('click', () => {
+                    if (newBtn.disabled) return;
+                    const courseId = newBtn.dataset.courseId;
+                    const lessonId = newBtn.dataset.lessonId; 
+                    loadLesson(courseId, lessonId);
+                });
+            });
+        }
+        
+        btnContinueLearning.addEventListener('click', () => {
+            if (lastLesson && currentUser) {
+                loadLesson(lastLesson.courseId, lastLesson.lessonId);
+            } else if (!currentUser) {
+                alert("Por favor, inicia sesión para continuar.");
+                openModal(modalLogin);
+            } else {
+                 alert("No hay una lección guardada para continuar. Elige un curso.");
+                 showSection('cursos');
+            }
+        });
+        
+        document.getElementById('prev-lesson-btn').addEventListener('click', () => {
+            if (currentLessonData && currentLessonData.prev) {
+                loadLesson(currentLessonData.courseId, currentLessonData.prev); // Use stored courseId
+            }
+        });
+
+        document.getElementById('next-lesson-btn').addEventListener('click', () => {
+            if (currentLessonData && currentLessonData.next) {
+                loadLesson(currentLessonData.courseId, currentLessonData.next); // Use stored courseId
+            } else if (currentLessonData && !currentLessonData.next) {
+                alert("¡Felicidades! Has completado este módulo (simulado).");
+                // Aquí podrías actualizar el progreso del usuario
+                // currentUser.progress[currentLessonData.courseId].completed = true; (ejemplo)
+                // localStorage.setItem('currentUser', JSON.stringify(currentUser));
+                showSection('cursos');
+            }
+        });
+
+        const userCodeInput = document.getElementById('user-code-input');
+        const runCodeBtn = document.getElementById('run-code-btn');
+        const resetCodeBtn = document.getElementById('reset-code-btn');
+        const exerciseFeedback = document.getElementById('exercise-feedback');
+
+        runCodeBtn.addEventListener('click', () => {
+            const userCode = userCodeInput.value.trim();
+            exerciseFeedback.classList.remove('hidden', 'bg-green-100', 'text-green-800', 'border-green-300', 'bg-red-100', 'text-red-800', 'border-red-300', 'bg-yellow-100', 'text-yellow-800', 'border-yellow-300');
+            exerciseFeedback.classList.add('p-4', 'rounded-lg', 'text-sm', 'border');
+
+            if (userCode.includes('edad') && userCode.includes('=') && (userCode.includes('print(edad)') || userCode.includes('print (edad)'))) {
+                exerciseFeedback.textContent = '¡Correcto! Has creado la variable `edad` y la has impreso. ¡Buen trabajo!';
+                exerciseFeedback.classList.add('bg-green-100', 'text-green-800', 'border-green-300');
+            } else if (userCode.includes('edad') && userCode.includes('=')) {
+                exerciseFeedback.textContent = 'Casi lo tienes... Has creado la variable `edad`, pero ¿recordaste imprimirla usando `print(edad)`?';
+                exerciseFeedback.classList.add('bg-yellow-100', 'text-yellow-800', 'border-yellow-300');
+            }
+            else {
+                exerciseFeedback.textContent = 'Respuesta incorrecta. Pista: asegúrate de crear una variable llamada `edad`, asignarle un valor, y luego usar `print(edad)` para mostrarla.';
+                exerciseFeedback.classList.add('bg-red-100', 'text-red-800', 'border-red-300');
+            }
+            exerciseFeedback.classList.remove('hidden');
+        });
+        
+        resetCodeBtn.addEventListener('click', () => {
+            userCodeInput.value = '';
+            exerciseFeedback.classList.add('hidden');
+            exerciseFeedback.textContent = '';
+            exerciseFeedback.classList.remove('bg-green-100', 'text-green-800', 'border-green-300', 'bg-red-100', 'text-red-800', 'border-red-300', 'bg-yellow-100', 'text-yellow-800', 'border-yellow-300', 'border');
+        });
+
+        document.getElementById('currentYear').textContent = new Date().getFullYear();
+        
+        const storedUser = localStorage.getItem('currentUser');
+        const storedLastLesson = localStorage.getItem('lastLesson');
+
+        if (storedUser) {
+            currentUser = JSON.parse(storedUser);
+            if (storedLastLesson) {
+                lastLesson = JSON.parse(storedLastLesson);
+            }
+            updateUIAfterLogin();
+        }
+        
+        showSection('inicio'); 
+        attachViewLessonButtonListeners();
+
+        window.addEventListener('beforeunload', () => {
+            if (currentUser) {
+                localStorage.setItem('currentUser', JSON.stringify(currentUser));
+            } else {
+                localStorage.removeItem('currentUser');
+            }
+        });
+    </script>
+</body>
+</html>
